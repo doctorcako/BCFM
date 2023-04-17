@@ -237,12 +237,12 @@ ldap:
 # which are always stored in lower case.
 #############################################################################
 affiliations:
-  org1:
+  ua:
     - department1
     - department2
-  org2:
+  agency:
     - department1
-  org3:
+  transport:
     - department1
 #############################################################################
 #  Signing section

@@ -80,7 +80,7 @@ tls:
 #############################################################################
 ca:
   # Name of this CA
-  name: Org3CA
+  name: AgencyCA
   # Key file (is only used to import a private key into BCCSP)
   keyfile:
   # Certificate file (default: ca-cert.pem)
@@ -237,16 +237,15 @@ ldap:
 # which are always stored in lower case.
 #############################################################################
 affiliations:
-  org1:
+  ua:
     - department1
     - department2
-  org2:
+  agency:
     - department1
     - department2
-  org3:
+  transport:
     - department1
     - department2
-
 #############################################################################
 #  Signing section
 #
@@ -305,17 +304,16 @@ signing:
 #     CA certificates though it can still issue end entity certificates.
 ###########################################################################
 csr:
-  cn: ca.org3.example.com
+  cn: ca.agency.example.com
   names:
-    - C: US
-      ST: "North Carolina"
-      L: "Durham"
-      O: org3.example.com
+    - C: UK
+      ST: "Hampshire"
+      L: "Hursley"
+      O: agency.example.com
       OU:
   hosts:
     - localhost
-    - org3.example.com
-    - peer0.org3.example.com
+    - agency.example.com
   ca:
     expiry: 131400h
     pathlength: 1

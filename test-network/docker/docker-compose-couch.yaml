@@ -32,7 +32,7 @@ services:
         aliases:
           - couchdb0.example.com
 
-  peer0org1examplecom:
+  peer0uaexamplecom:
     deploy:
       placement:
         constraints:
@@ -69,7 +69,7 @@ services:
         aliases:
           - couchdb1.example.com
 
-  peer0org2examplecom:
+  peer0agencyexamplecom:
     deploy:
       placement:
         constraints:
@@ -106,7 +106,7 @@ services:
         aliases:
           - couchdb2.example.com
 
-  peer0org3examplecom:
+  peer0transportexamplecom:
     deploy:
       placement:
         constraints:
