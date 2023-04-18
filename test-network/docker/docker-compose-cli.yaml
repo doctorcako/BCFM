@@ -44,7 +44,7 @@ services:
     networks:
       test:
         aliases:
-          - cliUa.bcfm.com
+          - cliua.bcfm.com
 
   cliAgency:
     container_name: cli
@@ -83,7 +83,7 @@ services:
     networks:
       test:
         aliases:
-          - cliAgency.bcfm.com
+          - cliagency.bcfm.com
 
   cliTransport:
     container_name: cli
@@ -122,4 +122,4 @@ services:
     networks:
       test:
         aliases:
-          - cliTransport.bcfm.com
+          - clitransport.bcfm.com

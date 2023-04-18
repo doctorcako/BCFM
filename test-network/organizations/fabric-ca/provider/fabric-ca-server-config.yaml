@@ -80,7 +80,7 @@ tls:
 #############################################################################
 ca:
   # Name of this CA
-  name: UaCA
+  name: ProviderCA
   # Key file (is only used to import a private key into BCCSP)
   keyfile:
   # Certificate file (default: ca-cert.pem)
@@ -255,7 +255,6 @@ affiliations:
   provider:
     - department1
     - department2
-
 #############################################################################
 #  Signing section
 #
@@ -314,18 +313,16 @@ signing:
 #     CA certificates though it can still issue end entity certificates.
 ###########################################################################
 csr:
-  cn: ca.ua.bcfm.com
+  cn: ca.provider.bcfm.com
   names:
-    - C: US
-      ST: "North Carolina"
-      L: "Durham"
-      O: ua.bcfm.com
+    - C: UK
+      ST: "Hampshire"
+      L: "Hursley"
+      O: provider.bcfm.com
       OU:
   hosts:
     - localhost
-    - ua.bcfm.com
-    - peer0.ua.bcfm.com
-    -
+    - provider.bcfm.com
   ca:
     expiry: 131400h
     pathlength: 1
