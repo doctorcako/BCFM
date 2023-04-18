@@ -304,16 +304,16 @@ signing:
 #     CA certificates though it can still issue end entity certificates.
 ###########################################################################
 csr:
-  cn: ca.agency.example.com
+  cn: ca.agency.bcfm.com
   names:
     - C: UK
       ST: "Hampshire"
       L: "Hursley"
-      O: agency.example.com
+      O: agency.bcfm.com
       OU:
   hosts:
     - localhost
-    - agency.example.com
+    - agency.bcfm.com
   ca:
     expiry: 131400h
     pathlength: 1

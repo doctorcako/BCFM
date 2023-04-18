@@ -303,17 +303,17 @@ signing:
 #     CA certificates though it can still issue end entity certificates.
 ###########################################################################
 csr:
-  cn: ca.ua.example.com
+  cn: ca.ua.bcfm.com
   names:
     - C: US
       ST: "North Carolina"
       L: "Durham"
-      O: ua.example.com
+      O: ua.bcfm.com
       OU:
   hosts:
     - localhost
-    - ua.example.com
-    - peer0.ua.example.com
+    - ua.bcfm.com
+    - peer0.ua.bcfm.com
     -
   ca:
     expiry: 131400h

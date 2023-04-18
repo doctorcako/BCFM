@@ -5,3 +5,4 @@ IssuerPublicKey
 IssuerRevocationPublicKey
 ordererOrganizations
 peerOrganizations
+channel-artifacts/

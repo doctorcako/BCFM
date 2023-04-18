@@ -302,16 +302,16 @@ signing:
 #     CA certificates though it can still issue end entity certificates.
 ###########################################################################
 csr:
-  cn: ca.orderer.example.com
+  cn: ca.orderer.bcfm.com
   names:
     - C: US
       ST: "New York"
       L: "New York"
-      O: example.com
+      O: bcfm.com
       OU:
   hosts:
     - localhost
-    - example.com
+    - bcfm.com
   ca:
     expiry: 131400h
     pathlength: 1

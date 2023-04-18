@@ -305,17 +305,17 @@ signing:
 #     CA certificates though it can still issue end entity certificates.
 ###########################################################################
 csr:
-  cn: ca.transport.example.com
+  cn: ca.transport.bcfm.com
   names:
     - C: US
       ST: "North Carolina"
       L: "Durham"
-      O: transport.example.com
+      O: transport.bcfm.com
       OU:
   hosts:
     - localhost
-    - transport.example.com
-    - peer0.transport.example.com
+    - transport.bcfm.com
+    - peer0.transport.bcfm.com
   ca:
     expiry: 131400h
     pathlength: 1

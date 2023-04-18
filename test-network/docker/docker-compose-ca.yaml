@@ -31,7 +31,7 @@ services:
     networks:
        test:
          aliases:
-          - ca.ua.example.com
+          - ca.ua.bcfm.com
 
   ca_agency:
     deploy:
@@ -53,7 +53,7 @@ services:
     networks:
        test:
          aliases:
-          - ca.agency.example.com
+          - ca.agency.bcfm.com
   ca_transport:
     deploy:
       placement:
@@ -74,7 +74,7 @@ services:
     networks:
        test:
          aliases:
-          - ca.transport.example.com
+          - ca.transport.bcfm.com
 
   ca_orderer:
     deploy:
@@ -96,4 +96,4 @@ services:
     networks:
        test:
          aliases:
-          - ca.orderer.example.com
+          - ca.orderer.bcfm.com

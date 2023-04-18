@@ -6,14 +6,14 @@
 version: "3"
 
 volumes:
-  ordererexamplecom:
-  orderer2examplecom:
-  orderer3examplecom:
-  orderer4examplecom:
-  orderer5examplecom:
-  peer0uaexamplecom:
-  peer0agencyexamplecom:
-  peer0transportexamplecom:
+  ordererbcfmcom:
+  orderer2bcfmcom:
+  orderer3bcfmcom:
+  orderer4bcfmcom:
+  orderer5bcfmcom:
+  peer0uabcfmcom:
+  peer0agencybcfmcom:
+  peer0transportbcfmcom:
 
 networks:
   test:
@@ -21,12 +21,12 @@ networks:
       name: test
 
 services:
-  ordererexamplecom:
+  ordererbcfmcom:
     deploy:
       placement:
         constraints:
           - node.labels.name == manager
-    container_name: orderer.example.com
+    container_name: orderer.bcfm.com
     image: hyperledger/fabric-orderer:2.3
     environment:
       - FABRIC_LOGGING_SPEC=INFO
@@ -50,21 +50,21 @@ services:
     command: orderer
     volumes:
       - /home/ubuntu/BCFM/test-network/system-genesis-block/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
-      - /home/ubuntu/BCFM/test-network/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp:/var/hyperledger/orderer/msp
-      - /home/ubuntu/BCFM/test-network/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/:/var/hyperledger/orderer/tls
-      - ordererexamplecom:/var/hyperledger/production/orderer
+      - /home/ubuntu/BCFM/test-network/organizations/ordererOrganizations/bcfm.com/orderers/orderer.bcfm.com/msp:/var/hyperledger/orderer/msp
+      - /home/ubuntu/BCFM/test-network/organizations/ordererOrganizations/bcfm.com/orderers/orderer.bcfm.com/tls/:/var/hyperledger/orderer/tls
+      - ordererbcfmcom:/var/hyperledger/production/orderer
     ports:
       - 7050:7050
     networks:
       test:
         aliases:
-          - orderer.example.com
-  orderer2examplecom:
+          - orderer.bcfm.com
+  orderer2bcfmcom:
     deploy:
       placement:
         constraints:
           - node.labels.name == manager
-    container_name: orderer2.example.com
+    container_name: orderer2.bcfm.com
     image: hyperledger/fabric-orderer:2.3
     environment:
       - FABRIC_LOGGING_SPEC=INFO
@@ -88,22 +88,22 @@ services:
     command: orderer
     volumes:
       - /home/ubuntu/BCFM/test-network/system-genesis-block/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
-      - /home/ubuntu/BCFM/test-network/organizations/ordererOrganizations/example.com/orderers/orderer2.example.com/msp:/var/hyperledger/orderer/msp
-      - /home/ubuntu/BCFM/test-network/organizations/ordererOrganizations/example.com/orderers/orderer2.example.com/tls/:/var/hyperledger/orderer/tls
-      - orderer2examplecom:/var/hyperledger/production/orderer
+      - /home/ubuntu/BCFM/test-network/organizations/ordererOrganizations/bcfm.com/orderers/orderer2.bcfm.com/msp:/var/hyperledger/orderer/msp
+      - /home/ubuntu/BCFM/test-network/organizations/ordererOrganizations/bcfm.com/orderers/orderer2.bcfm.com/tls/:/var/hyperledger/orderer/tls
+      - orderer2bcfmcom:/var/hyperledger/production/orderer
     ports:
       - 8050:7050
     networks:
       test:
         aliases:
-          - orderer2.example.com
+          - orderer2.bcfm.com
 
-  orderer3examplecom:
+  orderer3bcfmcom:
     deploy:
       placement:
         constraints:
           - node.labels.name == manager
-    container_name: orderer3.example.com
+    container_name: orderer3.bcfm.com
     image: hyperledger/fabric-orderer:2.3
     environment:
       - FABRIC_LOGGING_SPEC=INFO
@@ -127,22 +127,22 @@ services:
     command: orderer
     volumes:
       - /home/ubuntu/BCFM/test-network/system-genesis-block/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
-      - /home/ubuntu/BCFM/test-network/organizations/ordererOrganizations/example.com/orderers/orderer3.example.com/msp:/var/hyperledger/orderer/msp
-      - /home/ubuntu/BCFM/test-network/organizations/ordererOrganizations/example.com/orderers/orderer3.example.com/tls/:/var/hyperledger/orderer/tls
-      - orderer3examplecom:/var/hyperledger/production/orderer
+      - /home/ubuntu/BCFM/test-network/organizations/ordererOrganizations/bcfm.com/orderers/orderer3.bcfm.com/msp:/var/hyperledger/orderer/msp
+      - /home/ubuntu/BCFM/test-network/organizations/ordererOrganizations/bcfm.com/orderers/orderer3.bcfm.com/tls/:/var/hyperledger/orderer/tls
+      - orderer3bcfmcom:/var/hyperledger/production/orderer
     ports:
       - 9050:7050
     networks:
       test:
         aliases:
-          - orderer3.example.com
+          - orderer3.bcfm.com
 
-  orderer4examplecom:
+  orderer4bcfmcom:
     deploy:
       placement:
         constraints:
           - node.labels.name == manager
-    container_name: orderer4.example.com
+    container_name: orderer4.bcfm.com
     image: hyperledger/fabric-orderer:2.3
     environment:
       - FABRIC_LOGGING_SPEC=INFO
@@ -166,22 +166,22 @@ services:
     command: orderer
     volumes:
       - /home/ubuntu/BCFM/test-network/system-genesis-block/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
-      - /home/ubuntu/BCFM/test-network/organizations/ordererOrganizations/example.com/orderers/orderer4.example.com/msp:/var/hyperledger/orderer/msp
-      - /home/ubuntu/BCFM/test-network/organizations/ordererOrganizations/example.com/orderers/orderer4.example.com/tls/:/var/hyperledger/orderer/tls
-      - orderer4examplecom:/var/hyperledger/production/orderer
+      - /home/ubuntu/BCFM/test-network/organizations/ordererOrganizations/bcfm.com/orderers/orderer4.bcfm.com/msp:/var/hyperledger/orderer/msp
+      - /home/ubuntu/BCFM/test-network/organizations/ordererOrganizations/bcfm.com/orderers/orderer4.bcfm.com/tls/:/var/hyperledger/orderer/tls
+      - orderer4bcfmcom:/var/hyperledger/production/orderer
     ports:
       - 10050:7050
     networks:
       test:
         aliases:
-          - orderer4.example.com
+          - orderer4.bcfm.com
 
-  orderer5examplecom:
+  orderer5bcfmcom:
     deploy:
       placement:
         constraints:
           - node.labels.name == manager
-    container_name: orderer5.example.com
+    container_name: orderer5.bcfm.com
     image: hyperledger/fabric-orderer:2.3
     environment:
       - FABRIC_LOGGING_SPEC=INFO
@@ -205,22 +205,22 @@ services:
     command: orderer
     volumes:
       - /home/ubuntu/BCFM/test-network/system-genesis-block/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
-      - /home/ubuntu/BCFM/test-network/organizations/ordererOrganizations/example.com/orderers/orderer5.example.com/msp:/var/hyperledger/orderer/msp
-      - /home/ubuntu/BCFM/test-network/organizations/ordererOrganizations/example.com/orderers/orderer5.example.com/tls/:/var/hyperledger/orderer/tls
-      - orderer5examplecom:/var/hyperledger/production/orderer
+      - /home/ubuntu/BCFM/test-network/organizations/ordererOrganizations/bcfm.com/orderers/orderer5.bcfm.com/msp:/var/hyperledger/orderer/msp
+      - /home/ubuntu/BCFM/test-network/organizations/ordererOrganizations/bcfm.com/orderers/orderer5.bcfm.com/tls/:/var/hyperledger/orderer/tls
+      - orderer5bcfmcom:/var/hyperledger/production/orderer
     ports:
       - 11050:7050
     networks:
       test:
         aliases:
-          - orderer5.example.com
+          - orderer5.bcfm.com
 
-  peer0uaexamplecom:
+  peer0uabcfmcom:
     deploy:
       placement:
         constraints:
           - node.labels.name == manager
-    container_name: peer0.ua.example.com
+    container_name: peer0.ua.bcfm.com
     image: hyperledger/fabric-peer:2.3
     environment:
       #Generic peer variables
@@ -238,22 +238,22 @@ services:
       - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
       - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
       # Peer specific variabes
-      - CORE_PEER_ID=peer0.ua.example.com
-      - CORE_PEER_ADDRESS=peer0.ua.example.com:7051
+      - CORE_PEER_ID=peer0.ua.bcfm.com
+      - CORE_PEER_ADDRESS=peer0.ua.bcfm.com:7051
       - CORE_PEER_LISTENADDRESS=0.0.0.0:7051
-      - CORE_PEER_CHAINCODEADDRESS=peer0.ua.example.com:7052
+      - CORE_PEER_CHAINCODEADDRESS=peer0.ua.bcfm.com:7052
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7052
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.ua.example.com:7051
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.ua.example.com:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.ua.bcfm.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.ua.bcfm.com:7051
       - CORE_PEER_LOCALMSPID=uaMSP
       - CORE_PEER_GOSSIP_USELEADERELECTION=true
       - CORE_PEER_GOSSIP_ORGLEADER=false
       - CORE_PEER_TLS_CLIENTAUTHREQUIRED=false
     volumes:
       - /var/run/:/host/var/run/
-      - /home/ubuntu/BCFM/test-network/organizations/peerOrganizations/ua.example.com/peers/peer0.ua.example.com/msp:/etc/hyperledger/fabric/msp
-      - /home/ubuntu/BCFM/test-network/organizations/peerOrganizations/ua.example.com/peers/peer0.ua.example.com/tls:/etc/hyperledger/fabric/tls
-      - peer0uaexamplecom:/var/hyperledger/production
+      - /home/ubuntu/BCFM/test-network/organizations/peerOrganizations/ua.bcfm.com/peers/peer0.ua.bcfm.com/msp:/etc/hyperledger/fabric/msp
+      - /home/ubuntu/BCFM/test-network/organizations/peerOrganizations/ua.bcfm.com/peers/peer0.ua.bcfm.com/tls:/etc/hyperledger/fabric/tls
+      - peer0uabcfmcom:/var/hyperledger/production
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: peer node start
     ports:
@@ -261,14 +261,14 @@ services:
     networks:
       test:
         aliases:
-          - peer0.ua.example.com
+          - peer0.ua.bcfm.com
 
-  peer0agencyexamplecom:
+  peer0agencybcfmcom:
     deploy:
       placement:
         constraints:
           - node.labels.name == manager
-    container_name: peer0.agency.example.com
+    container_name: peer0.agency.bcfm.com
     image: hyperledger/fabric-peer:2.3
     environment:
       #Generic peer variables
@@ -286,22 +286,22 @@ services:
       - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
       - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
       # Peer specific variabes
-      - CORE_PEER_ID=peer0.agency.example.com
-      - CORE_PEER_ADDRESS=peer0.agency.example.com:9051
+      - CORE_PEER_ID=peer0.agency.bcfm.com
+      - CORE_PEER_ADDRESS=peer0.agency.bcfm.com:9051
       - CORE_PEER_LISTENADDRESS=0.0.0.0:9051
-      - CORE_PEER_CHAINCODEADDRESS=peer0.agency.example.com:9052
+      - CORE_PEER_CHAINCODEADDRESS=peer0.agency.bcfm.com:9052
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:9052
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.agency.example.com:9051
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.agency.example.com:9051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.agency.bcfm.com:9051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.agency.bcfm.com:9051
       - CORE_PEER_LOCALMSPID=agencyMSP
       - CORE_PEER_GOSSIP_USELEADERELECTION=true
       - CORE_PEER_GOSSIP_ORGLEADER=false
       - CORE_PEER_TLS_CLIENTAUTHREQUIRED=false
     volumes:
       - /var/run/:/host/var/run/
-      - /home/ubuntu/BCFM/test-network/organizations/peerOrganizations/agency.example.com/peers/peer0.agency.example.com/msp:/etc/hyperledger/fabric/msp
-      - /home/ubuntu/BCFM/test-network/organizations/peerOrganizations/agency.example.com/peers/peer0.agency.example.com/tls:/etc/hyperledger/fabric/tls
-      - peer0agencyexamplecom:/var/hyperledger/production
+      - /home/ubuntu/BCFM/test-network/organizations/peerOrganizations/agency.bcfm.com/peers/peer0.agency.bcfm.com/msp:/etc/hyperledger/fabric/msp
+      - /home/ubuntu/BCFM/test-network/organizations/peerOrganizations/agency.bcfm.com/peers/peer0.agency.bcfm.com/tls:/etc/hyperledger/fabric/tls
+      - peer0agencybcfmcom:/var/hyperledger/production
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: peer node start
     ports:
@@ -309,14 +309,14 @@ services:
     networks:
       test:
         aliases:
-          - peer0.agency.example.com
+          - peer0.agency.bcfm.com
 
-  peer0transportexamplecom:
+  peer0transportbcfmcom:
     deploy:
       placement:
         constraints:
           - node.labels.name == manager
-    container_name: peer0.transport.example.com
+    container_name: peer0.transport.bcfm.com
     image: hyperledger/fabric-peer:2.3
     environment:
       #Generic peer variables
@@ -334,22 +334,22 @@ services:
       - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
       - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
       # Peer specific variabes
-      - CORE_PEER_ID=peer0.transport.example.com
-      - CORE_PEER_ADDRESS=peer0.transport.example.com:11051
+      - CORE_PEER_ID=peer0.transport.bcfm.com
+      - CORE_PEER_ADDRESS=peer0.transport.bcfm.com:11051
       - CORE_PEER_LISTENADDRESS=0.0.0.0:11051
-      - CORE_PEER_CHAINCODEADDRESS=peer0.transport.example.com:11052
+      - CORE_PEER_CHAINCODEADDRESS=peer0.transport.bcfm.com:11052
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:11052
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.transport.example.com:11051
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.transport.example.com:11051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.transport.bcfm.com:11051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.transport.bcfm.com:11051
       - CORE_PEER_LOCALMSPID=transportMSP
       - CORE_PEER_GOSSIP_USELEADERELECTION=true
       - CORE_PEER_GOSSIP_ORGLEADER=false
       - CORE_PEER_TLS_CLIENTAUTHREQUIRED=false
     volumes:
       - /var/run/:/host/var/run/
-      - /home/ubuntu/BCFM/test-network/organizations/peerOrganizations/transport.example.com/peers/peer0.transport.example.com/msp:/etc/hyperledger/fabric/msp
-      - /home/ubuntu/BCFM/test-network/organizations/peerOrganizations/transport.example.com/peers/peer0.transport.example.com/tls:/etc/hyperledger/fabric/tls
-      - peer0transportexamplecom:/var/hyperledger/production
+      - /home/ubuntu/BCFM/test-network/organizations/peerOrganizations/transport.bcfm.com/peers/peer0.transport.bcfm.com/msp:/etc/hyperledger/fabric/msp
+      - /home/ubuntu/BCFM/test-network/organizations/peerOrganizations/transport.bcfm.com/peers/peer0.transport.bcfm.com/tls:/etc/hyperledger/fabric/tls
+      - peer0transportbcfmcom:/var/hyperledger/production
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: peer node start
     ports:
@@ -357,4 +357,4 @@ services:
     networks:
       test:
         aliases:
-          - peer0.transport.example.com
+          - peer0.transport.bcfm.com
