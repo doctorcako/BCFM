@@ -7,7 +7,7 @@ CHANNEL_NAME="$1"
 DELAY="$2"
 MAX_RETRY="$3"
 VERBOSE="$4"
-: ${CHANNEL_NAME:="bcfmchannel1"}
+: ${CHANNEL_NAME:="mychannel"}
 : ${DELAY:="3"}
 : ${MAX_RETRY:="5"}
 : ${VERBOSE:="true"}
@@ -33,7 +33,7 @@ createChannelTx() {
 
 createAncorPeerTx() {
 
-	for orgmsp in UaMSP AgencyMSP TransportMSP; do
+	for orgmsp in UaMSP AgencyMSP TransportMSP ProducerMSP; do
 
 	infoln "Generating anchor peer update transaction for ${orgmsp}"
 	set -x

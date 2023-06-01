@@ -54,6 +54,7 @@ services:
        test:
          aliases:
           - ca.agency.bcfm.com
+
   ca_transport:
     deploy:
       placement:
@@ -76,6 +77,28 @@ services:
          aliases:
           - ca.transport.bcfm.com
 
+  ca_producer:
+    deploy:
+      placement:
+        constraints:
+          - node.labels.name == producer
+    image: hyperledger/fabric-ca:latest
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-producer
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_PORT=11054
+    ports:
+      - "11054:11054"
+    command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
+    volumes:
+      - /home/ubuntu/BCFM/test-network/organizations/fabric-ca/producer:/etc/hyperledger/fabric-ca-server
+    container_name: ca_producer
+    networks:
+      test:
+        aliases:
+          - ca.producer.bcfm.com
+
   ca_orderer:
     deploy:
       placement:
@@ -97,3 +120,5 @@ services:
        test:
          aliases:
           - ca.orderer.bcfm.com
+
+  
