@@ -184,73 +184,73 @@ Organizations:
             - Host: peer0.producer.bcfm.com
               Port: 13051
 
-    # - &Provider
-    #     # DefaultOrg defines the organization which is used in the sampleconfig
-    #     # of the fabric.git development environment
-    #     Name: ProviderMSP
+    - &Provider
+        # DefaultOrg defines the organization which is used in the sampleconfig
+        # of the fabric.git development environment
+        Name: ProviderMSP
 
-    #     # ID to load the MSP definition as
-    #     ID: ProviderMSP
+        # ID to load the MSP definition as
+        ID: ProviderMSP
 
-    #     MSPDir: ../organizations/peerOrganizations/provider.bcfm.com/msp
+        MSPDir: ../organizations/peerOrganizations/provider.bcfm.com/msp
 
-    #     # Policies defines the set of policies at this level of the config tree
-    #     # For organization policies, their canonical path is usually
-    #     #   /Channel/<Application|Orderer>/<OrgName>/<PolicyName>
-    #     Policies:
-    #         Readers:
-    #             Type: Signature
-    #             Rule: "OR('ProviderMSP.member')"
-    #         Writers:
-    #             Type: Signature
-    #             Rule: "OR('ProviderMSP.member')"
-    #         Admins:
-    #             Type: Signature
-    #             Rule: "OR('ProviderMSP.admin')"
-    #         Endorsement:
-    #             Type: Signature
-    #             Rule: "OR('ProviderMSP.peer')"
+        # Policies defines the set of policies at this level of the config tree
+        # For organization policies, their canonical path is usually
+        #   /Channel/<Application|Orderer>/<OrgName>/<PolicyName>
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('ProviderMSP.member')"
+            Writers:
+                Type: Signature
+                Rule: "OR('ProviderMSP.member')"
+            Admins:
+                Type: Signature
+                Rule: "OR('ProviderMSP.admin')"
+            Endorsement:
+                Type: Signature
+                Rule: "OR('ProviderMSP.peer')"
 
-    #     AnchorPeers:
-    #         # AnchorPeers defines the location of peers which can be used
-    #         # for cross org gossip communication.  Note, this value is only
-    #         # encoded in the genesis block in the Application section context
-    #         - Host: peer0.provider.bcfm.com
-    #           Port: 15051
+        AnchorPeers:
+            # AnchorPeers defines the location of peers which can be used
+            # for cross org gossip communication.  Note, this value is only
+            # encoded in the genesis block in the Application section context
+            - Host: peer0.provider.bcfm.com
+              Port: 15051
 
-    # - &Farmacy
-    #     # DefaultOrg defines the organization which is used in the sampleconfig
-    #     # of the fabric.git development environment
-    #     Name: FarmacyMSP
+    - &Farmacy
+        # DefaultOrg defines the organization which is used in the sampleconfig
+        # of the fabric.git development environment
+        Name: FarmacyMSP
 
-    #     # ID to load the MSP definition as
-    #     ID: FarmacyMSP
+        # ID to load the MSP definition as
+        ID: FarmacyMSP
 
-    #     MSPDir: ../organizations/peerOrganizations/farmacy.bcfm.com/msp
+        MSPDir: ../organizations/peerOrganizations/farmacy.bcfm.com/msp
 
-    #     # Policies defines the set of policies at this level of the config tree
-    #     # For organization policies, their canonical path is usually
-    #     #   /Channel/<Application|Orderer>/<OrgName>/<PolicyName>
-    #     Policies:
-    #         Readers:
-    #             Type: Signature
-    #             Rule: "OR('FarmacyMSP.member')"
-    #         Writers:
-    #             Type: Signature
-    #             Rule: "OR('FarmacyMSP.member')"
-    #         Admins:
-    #             Type: Signature
-    #             Rule: "OR('FarmacyMSP.admin')"
-    #         Endorsement:
-    #             Type: Signature
-    #             Rule: "OR('FarmacyMSP.peer')"
+        # Policies defines the set of policies at this level of the config tree
+        # For organization policies, their canonical path is usually
+        #   /Channel/<Application|Orderer>/<OrgName>/<PolicyName>
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('FarmacyMSP.member')"
+            Writers:
+                Type: Signature
+                Rule: "OR('FarmacyMSP.member')"
+            Admins:
+                Type: Signature
+                Rule: "OR('FarmacyMSP.admin')"
+            Endorsement:
+                Type: Signature
+                Rule: "OR('FarmacyMSP.peer')"
 
-    #     AnchorPeers:
-    #         # AnchorPeers defines the location of peers which can be used
-    #         # for cross org gossip communication.  Note, this value is only
-    #         # encoded in the genesis block in the Application section context
-    #         - Host: peer0.farmacy.bcfm.com
-    #           Port: 17051          
+        AnchorPeers:
+            # AnchorPeers defines the location of peers which can be used
+            # for cross org gossip communication.  Note, this value is only
+            # encoded in the genesis block in the Application section context
+            - Host: peer0.farmacy.bcfm.com
+              Port: 17051          
 
 
 ################################################################################
@@ -560,8 +560,8 @@ Profiles:
                     - *Agency
                     - *Transport
                     - *Producer
-                    # - *Provider
-                    # - *Farmacy
+                    - *Provider
+                    - *Farmacy
     TwoOrgsChannel:
         Consortium: BcfmConsortium
         <<: *ChannelDefaults
@@ -572,7 +572,7 @@ Profiles:
                 - *Agency
                 - *Transport
                 - *Producer
-                # - *Provider
-                # - *Farmacy
+                - *Provider
+                - *Farmacy
             Capabilities:
                 <<: *ApplicationCapabilities

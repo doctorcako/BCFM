@@ -377,6 +377,194 @@ function createproducer() {
 
 }
 
+function createprovider() {
+  mkdir channel-artifacts
+  mkdir -p organizations/ordererOrganizations/bcfm.com/orderers/orderer.bcfm.com/msp/tlscacerts/
+  infoln "Enroll the CA admin"
+  sleep 2
+  mkdir -p organizations/peerOrganizations/provider.bcfm.com/
+
+  export FABRIC_CA_CLIENT_HOME=${PWD}/organizations/peerOrganizations/provider.bcfm.com/
+  #  rm -rf $FABRIC_CA_CLIENT_HOME/fabric-ca-client-config.yaml
+  #  rm -rf $FABRIC_CA_CLIENT_HOME/msp
+
+  set -x
+  fabric-ca-client enroll -u https://admin:adminpw@localhost:12054 --caname ca-provider --tls.certfiles ${PWD}/organizations/fabric-ca/provider/tls-cert.pem
+  { set +x; } 2>/dev/null
+
+  echo 'NodeOUs:
+  Enable: true
+  ClientOUIdentifier:
+    Certificate: cacerts/localhost-12054-ca-provider.pem
+    OrganizationalUnitIdentifier: client
+  PeerOUIdentifier:
+    Certificate: cacerts/localhost-12054-ca-provider.pem
+    OrganizationalUnitIdentifier: peer
+  AdminOUIdentifier:
+    Certificate: cacerts/localhost-12054-ca-provider.pem
+    OrganizationalUnitIdentifier: admin
+  OrdererOUIdentifier:
+    Certificate: cacerts/localhost-12054-ca-provider.pem
+    OrganizationalUnitIdentifier: orderer' >${PWD}/organizations/peerOrganizations/provider.bcfm.com/msp/config.yaml
+
+  infoln "Register peer0"
+  set -x
+  fabric-ca-client register --caname ca-provider --id.name peer0 --id.secret peer0pw --id.type peer --tls.certfiles ${PWD}/organizations/fabric-ca/provider/tls-cert.pem
+  { set +x; } 2>/dev/null
+
+  infoln "Register user"
+  set -x
+  fabric-ca-client register --caname ca-provider --id.name user1 --id.secret user1pw --id.type client --tls.certfiles ${PWD}/organizations/fabric-ca/provider/tls-cert.pem
+  { set +x; } 2>/dev/null
+
+  infoln "Register the org admin"
+  set -x
+  fabric-ca-client register --caname ca-provider --id.name provideradmin --id.secret provideradminpw --id.type admin --tls.certfiles ${PWD}/organizations/fabric-ca/provider/tls-cert.pem
+  { set +x; } 2>/dev/null
+
+  mkdir -p organizations/peerOrganizations/provider.bcfm.com/peers
+  mkdir -p organizations/peerOrganizations/provider.bcfm.com/peers/peer0.provider.bcfm.com
+
+  infoln "Generate the peer0 msp"
+  set -x
+  fabric-ca-client enroll -u https://peer0:peer0pw@localhost:12054 --caname ca-provider -M ${PWD}/organizations/peerOrganizations/provider.bcfm.com/peers/peer0.provider.bcfm.com/msp --csr.hosts peer0.provider.bcfm.com --tls.certfiles ${PWD}/organizations/fabric-ca/provider/tls-cert.pem
+  { set +x; } 2>/dev/null
+
+  cp ${PWD}/organizations/peerOrganizations/provider.bcfm.com/msp/config.yaml ${PWD}/organizations/peerOrganizations/provider.bcfm.com/peers/peer0.provider.bcfm.com/msp/config.yaml
+
+  infoln "Generate the peer0-tls certificates"
+  set -x
+  fabric-ca-client enroll -u https://peer0:peer0pw@localhost:12054 --caname ca-provider -M ${PWD}/organizations/peerOrganizations/provider.bcfm.com/peers/peer0.provider.bcfm.com/tls --enrollment.profile tls --csr.hosts peer0.provider.bcfm.com --csr.hosts localhost --tls.certfiles ${PWD}/organizations/fabric-ca/provider/tls-cert.pem
+  { set +x; } 2>/dev/null
+
+  cp ${PWD}/organizations/peerOrganizations/provider.bcfm.com/peers/peer0.provider.bcfm.com/tls/tlscacerts/* ${PWD}/organizations/peerOrganizations/provider.bcfm.com/peers/peer0.provider.bcfm.com/tls/ca.crt
+  cp ${PWD}/organizations/peerOrganizations/provider.bcfm.com/peers/peer0.provider.bcfm.com/tls/signcerts/* ${PWD}/organizations/peerOrganizations/provider.bcfm.com/peers/peer0.provider.bcfm.com/tls/server.crt
+  cp ${PWD}/organizations/peerOrganizations/provider.bcfm.com/peers/peer0.provider.bcfm.com/tls/keystore/* ${PWD}/organizations/peerOrganizations/provider.bcfm.com/peers/peer0.provider.bcfm.com/tls/server.key
+
+  mkdir -p ${PWD}/organizations/peerOrganizations/provider.bcfm.com/msp/tlscacerts
+  cp ${PWD}/organizations/peerOrganizations/provider.bcfm.com/peers/peer0.provider.bcfm.com/tls/tlscacerts/* ${PWD}/organizations/peerOrganizations/provider.bcfm.com/msp/tlscacerts/ca.crt
+
+  mkdir -p ${PWD}/organizations/peerOrganizations/provider.bcfm.com/tlsca
+  cp ${PWD}/organizations/peerOrganizations/provider.bcfm.com/peers/peer0.provider.bcfm.com/tls/tlscacerts/* ${PWD}/organizations/peerOrganizations/provider.bcfm.com/tlsca/tlsca.provider.bcfm.com-cert.pem
+
+  mkdir -p ${PWD}/organizations/peerOrganizations/provider.bcfm.com/ca
+  cp ${PWD}/organizations/peerOrganizations/provider.bcfm.com/peers/peer0.provider.bcfm.com/msp/cacerts/* ${PWD}/organizations/peerOrganizations/provider.bcfm.com/ca/ca.provider.bcfm.com-cert.pem
+
+  mkdir -p organizations/peerOrganizations/provider.bcfm.com/users
+  mkdir -p organizations/peerOrganizations/provider.bcfm.com/users/User1@provider.bcfm.com
+
+  infoln "Generate the user msp"
+  set -x
+  fabric-ca-client enroll -u https://user1:user1pw@localhost:12054 --caname ca-provider -M ${PWD}/organizations/peerOrganizations/provider.bcfm.com/users/User1@provider.bcfm.com/msp --tls.certfiles ${PWD}/organizations/fabric-ca/provider/tls-cert.pem
+  { set +x; } 2>/dev/null
+
+  cp ${PWD}/organizations/peerOrganizations/provider.bcfm.com/msp/config.yaml ${PWD}/organizations/peerOrganizations/provider.bcfm.com/users/User1@provider.bcfm.com/msp/config.yaml
+
+  mkdir -p organizations/peerOrganizations/provider.bcfm.com/users/Admin@provider.bcfm.com
+
+  infoln "Generate the org admin msp"
+  set -x
+  fabric-ca-client enroll -u https://provideradmin:provideradminpw@localhost:12054 --caname ca-provider -M ${PWD}/organizations/peerOrganizations/provider.bcfm.com/users/Admin@provider.bcfm.com/msp --tls.certfiles ${PWD}/organizations/fabric-ca/provider/tls-cert.pem
+  { set +x; } 2>/dev/null
+
+  cp ${PWD}/organizations/peerOrganizations/provider.bcfm.com/msp/config.yaml ${PWD}/organizations/peerOrganizations/provider.bcfm.com/users/Admin@provider.bcfm.com/msp/config.yaml
+
+}
+
+function createfarmacy() {
+  mkdir channel-artifacts
+  mkdir -p organizations/ordererOrganizations/bcfm.com/orderers/orderer.bcfm.com/msp/tlscacerts/
+  infoln "Enroll the CA admin"
+  sleep 2
+  mkdir -p organizations/peerOrganizations/farmacy.bcfm.com/
+
+  export FABRIC_CA_CLIENT_HOME=${PWD}/organizations/peerOrganizations/farmacy.bcfm.com/
+  #  rm -rf $FABRIC_CA_CLIENT_HOME/fabric-ca-client-config.yaml
+  #  rm -rf $FABRIC_CA_CLIENT_HOME/msp
+
+  set -x
+  fabric-ca-client enroll -u https://admin:adminpw@localhost:13054 --caname ca-farmacy --tls.certfiles ${PWD}/organizations/fabric-ca/farmacy/tls-cert.pem
+  { set +x; } 2>/dev/null
+
+  echo 'NodeOUs:
+  Enable: true
+  ClientOUIdentifier:
+    Certificate: cacerts/localhost-13054-ca-farmacy.pem
+    OrganizationalUnitIdentifier: client
+  PeerOUIdentifier:
+    Certificate: cacerts/localhost-13054-ca-farmacy.pem
+    OrganizationalUnitIdentifier: peer
+  AdminOUIdentifier:
+    Certificate: cacerts/localhost-13054-ca-farmacy.pem
+    OrganizationalUnitIdentifier: admin
+  OrdererOUIdentifier:
+    Certificate: cacerts/localhost-13054-ca-farmacy.pem
+    OrganizationalUnitIdentifier: orderer' >${PWD}/organizations/peerOrganizations/farmacy.bcfm.com/msp/config.yaml
+
+  infoln "Register peer0"
+  set -x
+  fabric-ca-client register --caname ca-farmacy --id.name peer0 --id.secret peer0pw --id.type peer --tls.certfiles ${PWD}/organizations/fabric-ca/farmacy/tls-cert.pem
+  { set +x; } 2>/dev/null
+
+  infoln "Register user"
+  set -x
+  fabric-ca-client register --caname ca-farmacy --id.name user1 --id.secret user1pw --id.type client --tls.certfiles ${PWD}/organizations/fabric-ca/farmacy/tls-cert.pem
+  { set +x; } 2>/dev/null
+
+  infoln "Register the org admin"
+  set -x
+  fabric-ca-client register --caname ca-farmacy --id.name farmacyadmin --id.secret farmacyadminpw --id.type admin --tls.certfiles ${PWD}/organizations/fabric-ca/farmacy/tls-cert.pem
+  { set +x; } 2>/dev/null
+
+  mkdir -p organizations/peerOrganizations/farmacy.bcfm.com/peers
+  mkdir -p organizations/peerOrganizations/farmacy.bcfm.com/peers/peer0.farmacy.bcfm.com
+
+  infoln "Generate the peer0 msp"
+  set -x
+  fabric-ca-client enroll -u https://peer0:peer0pw@localhost:13054 --caname ca-farmacy -M ${PWD}/organizations/peerOrganizations/farmacy.bcfm.com/peers/peer0.farmacy.bcfm.com/msp --csr.hosts peer0.farmacy.bcfm.com --tls.certfiles ${PWD}/organizations/fabric-ca/farmacy/tls-cert.pem
+  { set +x; } 2>/dev/null
+
+  cp ${PWD}/organizations/peerOrganizations/farmacy.bcfm.com/msp/config.yaml ${PWD}/organizations/peerOrganizations/farmacy.bcfm.com/peers/peer0.farmacy.bcfm.com/msp/config.yaml
+
+  infoln "Generate the peer0-tls certificates"
+  set -x
+  fabric-ca-client enroll -u https://peer0:peer0pw@localhost:13054 --caname ca-farmacy -M ${PWD}/organizations/peerOrganizations/farmacy.bcfm.com/peers/peer0.farmacy.bcfm.com/tls --enrollment.profile tls --csr.hosts peer0.farmacy.bcfm.com --csr.hosts localhost --tls.certfiles ${PWD}/organizations/fabric-ca/farmacy/tls-cert.pem
+  { set +x; } 2>/dev/null
+
+  cp ${PWD}/organizations/peerOrganizations/farmacy.bcfm.com/peers/peer0.farmacy.bcfm.com/tls/tlscacerts/* ${PWD}/organizations/peerOrganizations/farmacy.bcfm.com/peers/peer0.farmacy.bcfm.com/tls/ca.crt
+  cp ${PWD}/organizations/peerOrganizations/farmacy.bcfm.com/peers/peer0.farmacy.bcfm.com/tls/signcerts/* ${PWD}/organizations/peerOrganizations/farmacy.bcfm.com/peers/peer0.farmacy.bcfm.com/tls/server.crt
+  cp ${PWD}/organizations/peerOrganizations/farmacy.bcfm.com/peers/peer0.farmacy.bcfm.com/tls/keystore/* ${PWD}/organizations/peerOrganizations/farmacy.bcfm.com/peers/peer0.farmacy.bcfm.com/tls/server.key
+
+  mkdir -p ${PWD}/organizations/peerOrganizations/farmacy.bcfm.com/msp/tlscacerts
+  cp ${PWD}/organizations/peerOrganizations/farmacy.bcfm.com/peers/peer0.farmacy.bcfm.com/tls/tlscacerts/* ${PWD}/organizations/peerOrganizations/farmacy.bcfm.com/msp/tlscacerts/ca.crt
+
+  mkdir -p ${PWD}/organizations/peerOrganizations/farmacy.bcfm.com/tlsca
+  cp ${PWD}/organizations/peerOrganizations/farmacy.bcfm.com/peers/peer0.farmacy.bcfm.com/tls/tlscacerts/* ${PWD}/organizations/peerOrganizations/farmacy.bcfm.com/tlsca/tlsca.farmacy.bcfm.com-cert.pem
+
+  mkdir -p ${PWD}/organizations/peerOrganizations/farmacy.bcfm.com/ca
+  cp ${PWD}/organizations/peerOrganizations/farmacy.bcfm.com/peers/peer0.farmacy.bcfm.com/msp/cacerts/* ${PWD}/organizations/peerOrganizations/farmacy.bcfm.com/ca/ca.farmacy.bcfm.com-cert.pem
+
+  mkdir -p organizations/peerOrganizations/farmacy.bcfm.com/users
+  mkdir -p organizations/peerOrganizations/farmacy.bcfm.com/users/User1@farmacy.bcfm.com
+
+  infoln "Generate the user msp"
+  set -x
+  fabric-ca-client enroll -u https://user1:user1pw@localhost:13054 --caname ca-farmacy -M ${PWD}/organizations/peerOrganizations/farmacy.bcfm.com/users/User1@farmacy.bcfm.com/msp --tls.certfiles ${PWD}/organizations/fabric-ca/farmacy/tls-cert.pem
+  { set +x; } 2>/dev/null
+
+  cp ${PWD}/organizations/peerOrganizations/farmacy.bcfm.com/msp/config.yaml ${PWD}/organizations/peerOrganizations/farmacy.bcfm.com/users/User1@farmacy.bcfm.com/msp/config.yaml
+
+  mkdir -p organizations/peerOrganizations/farmacy.bcfm.com/users/Admin@farmacy.bcfm.com
+
+  infoln "Generate the org admin msp"
+  set -x
+  fabric-ca-client enroll -u https://farmacyadmin:farmacyadminpw@localhost:13054 --caname ca-farmacy -M ${PWD}/organizations/peerOrganizations/farmacy.bcfm.com/users/Admin@farmacy.bcfm.com/msp --tls.certfiles ${PWD}/organizations/fabric-ca/farmacy/tls-cert.pem
+  { set +x; } 2>/dev/null
+
+  cp ${PWD}/organizations/peerOrganizations/farmacy.bcfm.com/msp/config.yaml ${PWD}/organizations/peerOrganizations/farmacy.bcfm.com/users/Admin@farmacy.bcfm.com/msp/config.yaml
+
+}
+
 function createOrderer() {
 
   infoln "Enroll the CA admin"
