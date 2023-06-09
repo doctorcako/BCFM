@@ -161,7 +161,7 @@ services:
     networks:
       test:
         aliases:
-          - cliproducer.bcfm.com
+          - cliProducer.bcfm.com
 
   cliProvider:
     container_name: cli
