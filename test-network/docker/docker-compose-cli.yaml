@@ -36,10 +36,10 @@ services:
     command: /bin/bash
     volumes:
       - /var/run/:/host/var/run/
-      - /home/ubuntu/BCFM/chaincode/:/opt/gopath/src/github.com/chaincode
-      - /home/ubuntu/BCFM/test-network/organizations:/opt/gopath/src/github.com/hyperledger/fabric/peer/organizations/
-      - /home/ubuntu/BCFM/test-network/scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
-      - /home/ubuntu/BCFM/test-network/channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+      - ~/BCFM/chaincode/:/opt/gopath/src/github.com/chaincode
+      - ~/BCFM/test-network/organizations:/opt/gopath/src/github.com/hyperledger/fabric/peer/organizations/
+      - ~/BCFM/test-network/scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
+      - ~/BCFM/test-network/channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
     
     networks:
       test:
@@ -76,10 +76,10 @@ services:
     command: /bin/bash
     volumes:
       - /var/run/:/host/var/run/
-      - /home/ubuntu/BCFM/chaincode/:/opt/gopath/src/github.com/chaincode
-      - /home/ubuntu/BCFM/test-network/organizations:/opt/gopath/src/github.com/hyperledger/fabric/peer/organizations/
-      - /home/ubuntu/BCFM/test-network/scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
-      - /home/ubuntu/BCFM/test-network/channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+      - ~/BCFM/chaincode/:/opt/gopath/src/github.com/chaincode
+      - ~/BCFM/test-network/organizations:/opt/gopath/src/github.com/hyperledger/fabric/peer/organizations/
+      - ~/BCFM/test-network/scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
+      - ~/BCFM/test-network/channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
     networks:
       test:
         aliases:
@@ -115,10 +115,10 @@ services:
     command: /bin/bash
     volumes:
       - /var/run/:/host/var/run/
-      - /home/ubuntu/BCFM/chaincode/:/opt/gopath/src/github.com/chaincode
-      - /home/ubuntu/BCFM/test-network/organizations:/opt/gopath/src/github.com/hyperledger/fabric/peer/organizations/
-      - /home/ubuntu/BCFM/test-network/scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
-      - /home/ubuntu/BCFM/test-network/channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+      - ~/BCFM/chaincode/:/opt/gopath/src/github.com/chaincode
+      - ~/BCFM/test-network/organizations:/opt/gopath/src/github.com/hyperledger/fabric/peer/organizations/
+      - ~/BCFM/test-network/scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
+      - ~/BCFM/test-network/channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
     networks:
       test:
         aliases:
@@ -154,10 +154,10 @@ services:
     command: /bin/bash
     volumes:
       - /var/run/:/host/var/run/
-      - /home/ubuntu/BCFM/chaincode/:/opt/gopath/src/github.com/chaincode
-      - /home/ubuntu/BCFM/test-network/organizations:/opt/gopath/src/github.com/hyperledger/fabric/peer/organizations/
-      - /home/ubuntu/BCFM/test-network/scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
-      - /home/ubuntu/BCFM/test-network/channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+      - ~/BCFM/chaincode/:/opt/gopath/src/github.com/chaincode
+      - ~/BCFM/test-network/organizations:/opt/gopath/src/github.com/hyperledger/fabric/peer/organizations/
+      - ~/BCFM/test-network/scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
+      - ~/BCFM/test-network/channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
     networks:
       test:
         aliases:
@@ -193,10 +193,10 @@ services:
     command: /bin/bash
     volumes:
       - /var/run/:/host/var/run/
-      - /home/ubuntu/BCFM/chaincode/:/opt/gopath/src/github.com/chaincode
-      - /home/ubuntu/BCFM/test-network/organizations:/opt/gopath/src/github.com/hyperledger/fabric/peer/organizations/
-      - /home/ubuntu/BCFM/test-network/scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
-      - /home/ubuntu/BCFM/test-network/channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+      - ~/BCFM/chaincode/:/opt/gopath/src/github.com/chaincode
+      - ~/BCFM/test-network/organizations:/opt/gopath/src/github.com/hyperledger/fabric/peer/organizations/
+      - ~/BCFM/test-network/scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
+      - ~/BCFM/test-network/channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
     networks:
       test:
         aliases:
@@ -232,10 +232,10 @@ services:
     command: /bin/bash
     volumes:
       - /var/run/:/host/var/run/
-      - /home/ubuntu/BCFM/chaincode/:/opt/gopath/src/github.com/chaincode
-      - /home/ubuntu/BCFM/test-network/organizations:/opt/gopath/src/github.com/hyperledger/fabric/peer/organizations/
-      - /home/ubuntu/BCFM/test-network/scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
-      - /home/ubuntu/BCFM/test-network/channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+      - ~/BCFM/chaincode/:/opt/gopath/src/github.com/chaincode
+      - ~/BCFM/test-network/organizations:/opt/gopath/src/github.com/hyperledger/fabric/peer/organizations/
+      - ~/BCFM/test-network/scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
+      - ~/BCFM/test-network/channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
     networks:
       test:
         aliases:
