@@ -1,32 +1,32 @@
 ---
-name: test-network-org${ORG}
+name: test-network-${ORG}
 version: 1.0.0
 client:
-  organization: Org${ORG}
+  organization: ${ORG}
   connection:
     timeout:
       peer:
         endorser: '300'
 organizations:
-  Org${ORG}:
-    mspid: Org${ORG}MSP
+  ${ORGMSP}:
+    mspid: ${ORGMSP}MSP
     peers:
-    - peer0.org${ORG}.example.com
+    - peer0.${ORG}.bcfm.com
     certificateAuthorities:
-    - ca.org${ORG}.example.com
+    - ca.${ORG}.bcfm.com
 peers:
-  peer0.org${ORG}.example.com:
-    url: grpcs://peer0.org${ORG}.example.com:${P0PORT}
+  peer0.${ORG}.bcfm.com:
+    url: grpcs://peer0.${ORG}.bcfm.com:${P0PORT}
     tlsCACerts:
       pem: |
           ${PEERPEM}
     grpcOptions:
-      ssl-target-name-override: peer0.org${ORG}.example.com
-      hostnameOverride: peer0.org${ORG}.example.com
+      ssl-target-name-override: peer0.${ORG}.bcfm.com
+      hostnameOverride: peer0.${ORG}.bcfm.com
 certificateAuthorities:
-  ca.org${ORG}.example.com:
-    url: https://ca.org${ORG}.example.comt:${CAPORT}
-    caName: ca-org${ORG}
+  ca.${ORG}.bcfm.com:
+    url: https://ca.${ORG}.bcfm.com:${CAPORT}
+    caName: ca-${ORG}
     tlsCACerts:
       pem: 
         - |

@@ -1,3 +1,3 @@
-docker build -t aditya/node-app .
+docker build -t bcfm/node-app .
 
-docker service update hlf_nodeapp --force
+docker service update bcfm_nodeapp_nodeapp --force

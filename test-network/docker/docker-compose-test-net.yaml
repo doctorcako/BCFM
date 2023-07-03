@@ -52,9 +52,9 @@ services:
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric
     command: orderer
     volumes:
-      - ~/BCFM/test-network/system-genesis-block/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
-      - ~/BCFM/test-network/organizations/ordererOrganizations/bcfm.com/orderers/orderer.bcfm.com/msp:/var/hyperledger/orderer/msp
-      - ~/BCFM/test-network/organizations/ordererOrganizations/bcfm.com/orderers/orderer.bcfm.com/tls/:/var/hyperledger/orderer/tls
+      - /home/ubuntu/BCFM/test-network/system-genesis-block/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+      - /home/ubuntu/BCFM/test-network/organizations/ordererOrganizations/bcfm.com/orderers/orderer.bcfm.com/msp:/var/hyperledger/orderer/msp
+      - /home/ubuntu/BCFM/test-network/organizations/ordererOrganizations/bcfm.com/orderers/orderer.bcfm.com/tls/:/var/hyperledger/orderer/tls
       - ordererbcfmcom:/var/hyperledger/production/orderer
     ports:
       - 7050:7050
@@ -90,9 +90,9 @@ services:
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric
     command: orderer
     volumes:
-      - ~/BCFM/test-network/system-genesis-block/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
-      - ~/BCFM/test-network/organizations/ordererOrganizations/bcfm.com/orderers/orderer2.bcfm.com/msp:/var/hyperledger/orderer/msp
-      - ~/BCFM/test-network/organizations/ordererOrganizations/bcfm.com/orderers/orderer2.bcfm.com/tls/:/var/hyperledger/orderer/tls
+      - /home/ubuntu/BCFM/test-network/system-genesis-block/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+      - /home/ubuntu/BCFM/test-network/organizations/ordererOrganizations/bcfm.com/orderers/orderer2.bcfm.com/msp:/var/hyperledger/orderer/msp
+      - /home/ubuntu/BCFM/test-network/organizations/ordererOrganizations/bcfm.com/orderers/orderer2.bcfm.com/tls/:/var/hyperledger/orderer/tls
       - orderer2bcfmcom:/var/hyperledger/production/orderer
     ports:
       - 8050:7050
@@ -129,9 +129,9 @@ services:
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric
     command: orderer
     volumes:
-      - ~/BCFM/test-network/system-genesis-block/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
-      - ~/BCFM/test-network/organizations/ordererOrganizations/bcfm.com/orderers/orderer3.bcfm.com/msp:/var/hyperledger/orderer/msp
-      - ~/BCFM/test-network/organizations/ordererOrganizations/bcfm.com/orderers/orderer3.bcfm.com/tls/:/var/hyperledger/orderer/tls
+      - /home/ubuntu/BCFM/test-network/system-genesis-block/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+      - /home/ubuntu/BCFM/test-network/organizations/ordererOrganizations/bcfm.com/orderers/orderer3.bcfm.com/msp:/var/hyperledger/orderer/msp
+      - /home/ubuntu/BCFM/test-network/organizations/ordererOrganizations/bcfm.com/orderers/orderer3.bcfm.com/tls/:/var/hyperledger/orderer/tls
       - orderer3bcfmcom:/var/hyperledger/production/orderer
     ports:
       - 9050:7050
@@ -168,9 +168,9 @@ services:
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric
     command: orderer
     volumes:
-      - ~/BCFM/test-network/system-genesis-block/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
-      - ~/BCFM/test-network/organizations/ordererOrganizations/bcfm.com/orderers/orderer4.bcfm.com/msp:/var/hyperledger/orderer/msp
-      - ~/BCFM/test-network/organizations/ordererOrganizations/bcfm.com/orderers/orderer4.bcfm.com/tls/:/var/hyperledger/orderer/tls
+      - /home/ubuntu/BCFM/test-network/system-genesis-block/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+      - /home/ubuntu/BCFM/test-network/organizations/ordererOrganizations/bcfm.com/orderers/orderer4.bcfm.com/msp:/var/hyperledger/orderer/msp
+      - /home/ubuntu/BCFM/test-network/organizations/ordererOrganizations/bcfm.com/orderers/orderer4.bcfm.com/tls/:/var/hyperledger/orderer/tls
       - orderer4bcfmcom:/var/hyperledger/production/orderer
     ports:
       - 10050:7050
@@ -207,9 +207,9 @@ services:
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric
     command: orderer
     volumes:
-      - ~/BCFM/test-network/system-genesis-block/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
-      - ~/BCFM/test-network/organizations/ordererOrganizations/bcfm.com/orderers/orderer5.bcfm.com/msp:/var/hyperledger/orderer/msp
-      - ~/BCFM/test-network/organizations/ordererOrganizations/bcfm.com/orderers/orderer5.bcfm.com/tls/:/var/hyperledger/orderer/tls
+      - /home/ubuntu/BCFM/test-network/system-genesis-block/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+      - /home/ubuntu/BCFM/test-network/organizations/ordererOrganizations/bcfm.com/orderers/orderer5.bcfm.com/msp:/var/hyperledger/orderer/msp
+      - /home/ubuntu/BCFM/test-network/organizations/ordererOrganizations/bcfm.com/orderers/orderer5.bcfm.com/tls/:/var/hyperledger/orderer/tls
       - orderer5bcfmcom:/var/hyperledger/production/orderer
     ports:
       - 11050:7050
@@ -254,8 +254,8 @@ services:
       - CORE_PEER_TLS_CLIENTAUTHREQUIRED=false
     volumes:
       - /var/run/:/host/var/run/
-      - ~/BCFM/test-network/organizations/peerOrganizations/ua.bcfm.com/peers/peer0.ua.bcfm.com/msp:/etc/hyperledger/fabric/msp
-      - ~/BCFM/test-network/organizations/peerOrganizations/ua.bcfm.com/peers/peer0.ua.bcfm.com/tls:/etc/hyperledger/fabric/tls
+      - /home/ubuntu/BCFM/test-network/organizations/peerOrganizations/ua.bcfm.com/peers/peer0.ua.bcfm.com/msp:/etc/hyperledger/fabric/msp
+      - /home/ubuntu/BCFM/test-network/organizations/peerOrganizations/ua.bcfm.com/peers/peer0.ua.bcfm.com/tls:/etc/hyperledger/fabric/tls
       - peer0uabcfmcom:/var/hyperledger/production
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: peer node start
@@ -302,8 +302,8 @@ services:
       - CORE_PEER_TLS_CLIENTAUTHREQUIRED=false
     volumes:
       - /var/run/:/host/var/run/
-      - ~/BCFM/test-network/organizations/peerOrganizations/agency.bcfm.com/peers/peer0.agency.bcfm.com/msp:/etc/hyperledger/fabric/msp
-      - ~/BCFM/test-network/organizations/peerOrganizations/agency.bcfm.com/peers/peer0.agency.bcfm.com/tls:/etc/hyperledger/fabric/tls
+      - /home/ubuntu/BCFM/test-network/organizations/peerOrganizations/agency.bcfm.com/peers/peer0.agency.bcfm.com/msp:/etc/hyperledger/fabric/msp
+      - /home/ubuntu/BCFM/test-network/organizations/peerOrganizations/agency.bcfm.com/peers/peer0.agency.bcfm.com/tls:/etc/hyperledger/fabric/tls
       - peer0agencybcfmcom:/var/hyperledger/production
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: peer node start
@@ -350,8 +350,8 @@ services:
       - CORE_PEER_TLS_CLIENTAUTHREQUIRED=false
     volumes:
       - /var/run/:/host/var/run/
-      - ~/BCFM/test-network/organizations/peerOrganizations/transport.bcfm.com/peers/peer0.transport.bcfm.com/msp:/etc/hyperledger/fabric/msp
-      - ~/BCFM/test-network/organizations/peerOrganizations/transport.bcfm.com/peers/peer0.transport.bcfm.com/tls:/etc/hyperledger/fabric/tls
+      - /home/ubuntu/BCFM/test-network/organizations/peerOrganizations/transport.bcfm.com/peers/peer0.transport.bcfm.com/msp:/etc/hyperledger/fabric/msp
+      - /home/ubuntu/BCFM/test-network/organizations/peerOrganizations/transport.bcfm.com/peers/peer0.transport.bcfm.com/tls:/etc/hyperledger/fabric/tls
       - peer0transportbcfmcom:/var/hyperledger/production
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: peer node start
@@ -398,8 +398,8 @@ services:
       - CORE_PEER_TLS_CLIENTAUTHREQUIRED=false
     volumes:
       - /var/run/:/host/var/run/
-      - ~/BCFM/test-network/organizations/peerOrganizations/producer.bcfm.com/peers/peer0.producer.bcfm.com/msp:/etc/hyperledger/fabric/msp
-      - ~/BCFM/test-network/organizations/peerOrganizations/producer.bcfm.com/peers/peer0.producer.bcfm.com/tls:/etc/hyperledger/fabric/tls
+      - /home/ubuntu/BCFM/test-network/organizations/peerOrganizations/producer.bcfm.com/peers/peer0.producer.bcfm.com/msp:/etc/hyperledger/fabric/msp
+      - /home/ubuntu/BCFM/test-network/organizations/peerOrganizations/producer.bcfm.com/peers/peer0.producer.bcfm.com/tls:/etc/hyperledger/fabric/tls
       - peer0producerbcfmcom:/var/hyperledger/production
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: peer node start
@@ -446,8 +446,8 @@ services:
       - CORE_PEER_TLS_CLIENTAUTHREQUIRED=false
     volumes:
       - /var/run/:/host/var/run/
-      - ~/BCFM/test-network/organizations/peerOrganizations/provider.bcfm.com/peers/peer0.provider.bcfm.com/msp:/etc/hyperledger/fabric/msp
-      - ~/BCFM/test-network/organizations/peerOrganizations/provider.bcfm.com/peers/peer0.provider.bcfm.com/tls:/etc/hyperledger/fabric/tls
+      - /home/ubuntu/BCFM/test-network/organizations/peerOrganizations/provider.bcfm.com/peers/peer0.provider.bcfm.com/msp:/etc/hyperledger/fabric/msp
+      - /home/ubuntu/BCFM/test-network/organizations/peerOrganizations/provider.bcfm.com/peers/peer0.provider.bcfm.com/tls:/etc/hyperledger/fabric/tls
       - peer0providerbcfmcom:/var/hyperledger/production
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: peer node start
@@ -494,8 +494,8 @@ services:
       - CORE_PEER_TLS_CLIENTAUTHREQUIRED=false
     volumes:
       - /var/run/:/host/var/run/
-      - ~/BCFM/test-network/organizations/peerOrganizations/farmacy.bcfm.com/peers/peer0.farmacy.bcfm.com/msp:/etc/hyperledger/fabric/msp
-      - ~/BCFM/test-network/organizations/peerOrganizations/farmacy.bcfm.com/peers/peer0.farmacy.bcfm.com/tls:/etc/hyperledger/fabric/tls
+      - /home/ubuntu/BCFM/test-network/organizations/peerOrganizations/farmacy.bcfm.com/peers/peer0.farmacy.bcfm.com/msp:/etc/hyperledger/fabric/msp
+      - /home/ubuntu/BCFM/test-network/organizations/peerOrganizations/farmacy.bcfm.com/peers/peer0.farmacy.bcfm.com/tls:/etc/hyperledger/fabric/tls
       - peer0farmacybcfmcom:/var/hyperledger/production
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: peer node start

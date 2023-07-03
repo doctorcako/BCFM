@@ -4,9 +4,11 @@ const path = require("path");
 const walletPath = path.join(__dirname, "wallet");
 const {buildWallet} =require('./AppUtils')
 exports.tx = async (request) => {
-    let org = request.org;
-    let num = Number(org.match(/\d/g).join(""));
-    const ccp = getCCP(num);
+    // let org = request.org;
+    // let num = Number(org.match(/\d/g).join(""));
+    let org = getOrgName(request.org)
+    const ccp = buildCCP(org)
+    // const ccp = getCCP(num);
 
     const wallet = await buildWallet(Wallets, walletPath);
 

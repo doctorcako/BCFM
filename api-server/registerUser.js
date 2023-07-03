@@ -2,15 +2,18 @@ const { Wallets } = require("fabric-network");
 const FabricCAServices = require('fabric-ca-client');
 
 const { buildCAClient, registerAndEnrollUser, enrollAdmin } = require("./CAUtil")
-const { buildCCPOrg1, buildCCPOrg2, buildWallet, buildCCPOrg3 } = require("./AppUtils");
-const { getCCP } = require("./buildCCP");
+const { buildWallet, buildCCP, getOrgName } = require("./AppUtils");
+// const { getOrgName } = require("./buildCCP");
 const path=require('path');
 const walletPath=path.join(__dirname,"wallet")
 exports.registerUser = async ({ OrgMSP, userId }) => {
-
-    let org = Number(OrgMSP.match(/\d/g).join(""));
-    let ccp = getCCP(org)
-    const caClient = buildCAClient(FabricCAServices, ccp, `ca.org${org}.example.com`);
+    console.log(OrgMSP);
+    console.log(userId);
+    // let org = Number(OrgMSP.match(/\d/g).join(""));
+    let org = getOrgName(OrgMSP)
+    // console.log(org);
+    let ccp = buildCCP(org)
+    const caClient = buildCAClient(FabricCAServices, ccp, `ca.${org}.bcfm.com`);
 
     // setup the wallet to hold the credentials of the application user
     const wallet = await buildWallet(Wallets, walletPath);
@@ -20,7 +23,7 @@ exports.registerUser = async ({ OrgMSP, userId }) => {
 
     // in a real application this would be done only when a new user was required to be added
     // and would be part of an administrative flow
-    await registerAndEnrollUser(caClient, wallet, OrgMSP, userId, `org${org}.department1`);
+    await registerAndEnrollUser(caClient, wallet, OrgMSP, userId, `${org}.department1`);
 
     return {
         wallet

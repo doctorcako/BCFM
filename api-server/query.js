@@ -1,13 +1,15 @@
-const { getCCP } = require("./buildCCP");
+// const { getCCP } = require("./buildCCP");
 const { Wallets, Gateway } = require('fabric-network');
 const path = require("path");
 const walletPath = path.join(__dirname, "wallet");
 const {buildWallet} =require('./AppUtils')
 
 exports.query = async (request) => {
-    let org = request.org;
-    let num = Number(org.match(/\d/g).join(""));
-    const ccp = getCCP(num);
+    // let org = request.org;
+    // let num = Number(org.match(/\d/g).join(""));
+    // const ccp = getCCP(num);
+    let org = getOrgName(request.org)
+    const ccp = buildCCP(org)
 
     const wallet = await buildWallet(Wallets, walletPath);
 

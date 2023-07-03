@@ -9,9 +9,34 @@
 const fs = require('fs');
 const path = require('path');
 
-exports.buildCCPOrg1 = () => {
+exports.getOrgName = (OrgMSP) => {
+    let name;
+    switch (OrgMSP) {
+        case "UaMSP":
+            name = 'ua';
+            break;
+        case "AgencyMSP":
+            name = 'agency';
+            break;
+        case "TransportMSP":
+            name = 'transport'
+            break;
+		case "ProducerMSP":
+			name = 'producer'
+			break;
+		case "ProviderMSP":
+			name = 'provider'
+			break;
+		case "FarmacyMSP":
+			name = 'farmacy'
+			break;
+    }
+    return name;
+}
+
+exports.buildCCP = (org) => {
 	// load the common connection configuration file
-	const ccpPath = path.resolve(__dirname, 'connection-org1.json');
+	const ccpPath = path.resolve(__dirname, `connection-${org}.json`);
 	const fileExists = fs.existsSync(ccpPath);
 	if (!fileExists) {
 		throw new Error(`no such file or directory: ${ccpPath}`);
@@ -25,37 +50,37 @@ exports.buildCCPOrg1 = () => {
 	return ccp;
 };
 
-exports.buildCCPOrg2 = () => {
-	// load the common connection configuration file
-	const ccpPath = path.resolve(__dirname,  'connection-org2.json');
-	const fileExists = fs.existsSync(ccpPath);
-	if (!fileExists) {
-		throw new Error(`no such file or directory: ${ccpPath}`);
-	}
-	const contents = fs.readFileSync(ccpPath, 'utf8');
+// exports.buildCCPOrg2 = () => {
+// 	// load the common connection configuration file
+// 	const ccpPath = path.resolve(__dirname,  'connection-org2.json');
+// 	const fileExists = fs.existsSync(ccpPath);
+// 	if (!fileExists) {
+// 		throw new Error(`no such file or directory: ${ccpPath}`);
+// 	}
+// 	const contents = fs.readFileSync(ccpPath, 'utf8');
 
-	// build a JSON object from the file contents
-	const ccp = JSON.parse(contents);
+// 	// build a JSON object from the file contents
+// 	const ccp = JSON.parse(contents);
 
-	console.log(`Loaded the network configuration located at ${ccpPath}`);
-	return ccp;
-};
+// 	console.log(`Loaded the network configuration located at ${ccpPath}`);
+// 	return ccp;
+// };
 
-exports.buildCCPOrg3 = () => {
-	// load the common connection configuration file
-	const ccpPath = path.resolve(__dirname,  'connection-org3.json');
-	const fileExists = fs.existsSync(ccpPath);
-	if (!fileExists) {
-		throw new Error(`no such file or directory: ${ccpPath}`);
-	}
-	const contents = fs.readFileSync(ccpPath, 'utf8');
+// exports.buildCCPOrg3 = () => {
+// 	// load the common connection configuration file
+// 	const ccpPath = path.resolve(__dirname,  'connection-org3.json');
+// 	const fileExists = fs.existsSync(ccpPath);
+// 	if (!fileExists) {
+// 		throw new Error(`no such file or directory: ${ccpPath}`);
+// 	}
+// 	const contents = fs.readFileSync(ccpPath, 'utf8');
 
-	// build a JSON object from the file contents
-	const ccp = JSON.parse(contents);
+// 	// build a JSON object from the file contents
+// 	const ccp = JSON.parse(contents);
 
-	console.log(`Loaded the network configuration located at ${ccpPath}`);
-	return ccp;
-};
+// 	console.log(`Loaded the network configuration located at ${ccpPath}`);
+// 	return ccp;
+// };
 
 exports.buildWallet = async (Wallets, walletPath) => {
 	// Create a new  wallet : Note that wallet is for managing identities.
