@@ -1,16 +1,31 @@
-const { buildCCPOrg1 ,buildCCPOrg2,buildCCPOrg3} = require("./AppUtils");
+const { buildUaCCP, 
+        buildAgencyCCP,
+        buildFarmacyCCP,
+        buildProducerCCP,
+        buildProviderCCP,
+        buildTransportCCP
+    } = require("./AppUtils");
 
 exports.getCCP = (org) => {
-    let ccp;
+    let ccp = null;
     switch (org) {
-        case 1:
-            ccp = buildCCPOrg1();
+        case 'ua':
+            ccp = buildUaCCP();
             break;
-        case 2:
-            ccp = buildCCPOrg2();
+        case 'agency':
+            ccp = buildAgencyCCP();
             break;
-        case 3:
-            ccp = buildCCPOrg3();
+        case 'farmacy':
+            ccp = buildFarmacyCCP();
+            break;
+        case 'producer':
+            ccp = buildProducerCCP();
+            break;
+        case 'provider':
+            ccp = buildProviderCCP();
+            break;
+        case 'transport':
+            ccp = buildTransportCCP();
             break;
     }
     return ccp;

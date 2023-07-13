@@ -1,0 +1,49 @@
+{
+    "name": "test-network-farmacy",
+    "version": "1.0.0",
+    "client": {
+        "organization": "farmacy",
+        "connection": {
+            "timeout": {
+                "peer": {
+                    "endorser": "300"
+                }
+            }
+        }
+    },
+    "organizations": {
+        "Farmacy": {
+            "mspid": "FarmacyMSP",
+            "peers": [
+                "peer0.farmacy.bcfm.com"
+            ],
+            "certificateAuthorities": [
+                "ca.farmacy.bcfm.com"
+            ]
+        }
+    },
+    "peers": {
+        "peer0.farmacy.bcfm.com": {
+            "url": "grpcs://peer0.farmacy.bcfm.com:17051",
+            "tlsCACerts": {
+                "pem": "-----BEGIN CERTIFICATE-----\nMIICHjCCAcWgAwIBAgIUFV9CtWG92PbA55qxdiFLrb5Bv1QwCgYIKoZIzj0EAwIw\nbDELMAkGA1UEBhMCVUsxEjAQBgNVBAgTCUhhbXBzaGlyZTEQMA4GA1UEBxMHSHVy\nc2xleTEZMBcGA1UEChMQZmFybWFjeS5iY2ZtLmNvbTEcMBoGA1UEAxMTY2EuZmFy\nbWFjeS5iY2ZtLmNvbTAeFw0yMzA3MDkxODQyMDBaFw0zODA3MDUxODQyMDBaMGwx\nCzAJBgNVBAYTAlVLMRIwEAYDVQQIEwlIYW1wc2hpcmUxEDAOBgNVBAcTB0h1cnNs\nZXkxGTAXBgNVBAoTEGZhcm1hY3kuYmNmbS5jb20xHDAaBgNVBAMTE2NhLmZhcm1h\nY3kuYmNmbS5jb20wWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAARgAfyHCHw/R9P5\nOJBy551byzAgDYZizix5UHL13NEjEczfJyYc1xseX/p4iydqZVXvBHw1x9MI1nh1\ni8Tqo9ubo0UwQzAOBgNVHQ8BAf8EBAMCAQYwEgYDVR0TAQH/BAgwBgEB/wIBATAd\nBgNVHQ4EFgQUIS88whMgiTIAp15Hzhu2jZ3e9JcwCgYIKoZIzj0EAwIDRwAwRAIg\nZSVi5eKPPamdwA1tujJCxXnu7Xz+ZWJw/HTbvWlMpTECIHGEhGHDsnVxApkwj6P/\n1ohJb0aleajlrqV/hvtZTY0a\n-----END CERTIFICATE-----\n"
+            },
+            "grpcOptions": {
+                "ssl-target-name-override": "peer0.farmacy.bcfm.com",
+                "hostnameOverride": "peer0.farmacy.bcfm.com"
+            }
+        }
+    },
+    "certificateAuthorities": {
+        "ca.farmacy.bcfm.com": {
+            "url": "https://ca.farmacy.bcfm.com:13054",
+            "caName": "ca-farmacy",
+            "tlsCACerts": {
+                "pem": ["-----BEGIN CERTIFICATE-----\nMIICHjCCAcWgAwIBAgIUFV9CtWG92PbA55qxdiFLrb5Bv1QwCgYIKoZIzj0EAwIw\nbDELMAkGA1UEBhMCVUsxEjAQBgNVBAgTCUhhbXBzaGlyZTEQMA4GA1UEBxMHSHVy\nc2xleTEZMBcGA1UEChMQZmFybWFjeS5iY2ZtLmNvbTEcMBoGA1UEAxMTY2EuZmFy\nbWFjeS5iY2ZtLmNvbTAeFw0yMzA3MDkxODQyMDBaFw0zODA3MDUxODQyMDBaMGwx\nCzAJBgNVBAYTAlVLMRIwEAYDVQQIEwlIYW1wc2hpcmUxEDAOBgNVBAcTB0h1cnNs\nZXkxGTAXBgNVBAoTEGZhcm1hY3kuYmNmbS5jb20xHDAaBgNVBAMTE2NhLmZhcm1h\nY3kuYmNmbS5jb20wWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAARgAfyHCHw/R9P5\nOJBy551byzAgDYZizix5UHL13NEjEczfJyYc1xseX/p4iydqZVXvBHw1x9MI1nh1\ni8Tqo9ubo0UwQzAOBgNVHQ8BAf8EBAMCAQYwEgYDVR0TAQH/BAgwBgEB/wIBATAd\nBgNVHQ4EFgQUIS88whMgiTIAp15Hzhu2jZ3e9JcwCgYIKoZIzj0EAwIDRwAwRAIg\nZSVi5eKPPamdwA1tujJCxXnu7Xz+ZWJw/HTbvWlMpTECIHGEhGHDsnVxApkwj6P/\n1ohJb0aleajlrqV/hvtZTY0a\n-----END CERTIFICATE-----\n"]
+            },
+            "httpOptions": {
+                "verify": false
+            }
+        }
+    }
+}

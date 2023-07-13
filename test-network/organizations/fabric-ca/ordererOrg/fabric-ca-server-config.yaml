@@ -242,8 +242,19 @@ affiliations:
     - department2
   agency:
     - department1
+    - department2
   transport:
     - department1
+    - department2
+  farmacy:
+    - department1
+    - department2
+  producer:
+    - department1
+    - department2
+  provider:
+    - department1
+    - department2
 #############################################################################
 #  Signing section
 #

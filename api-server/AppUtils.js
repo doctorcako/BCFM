@@ -34,9 +34,9 @@ exports.getOrgName = (OrgMSP) => {
     return name;
 }
 
-exports.buildCCP = (org) => {
+exports.buildUaCCP = () => {
 	// load the common connection configuration file
-	const ccpPath = path.resolve(__dirname, `connection-${org}.json`);
+	const ccpPath = path.resolve(__dirname, `connection-ua.json`);
 	const fileExists = fs.existsSync(ccpPath);
 	if (!fileExists) {
 		throw new Error(`no such file or directory: ${ccpPath}`);
@@ -50,37 +50,86 @@ exports.buildCCP = (org) => {
 	return ccp;
 };
 
-// exports.buildCCPOrg2 = () => {
-// 	// load the common connection configuration file
-// 	const ccpPath = path.resolve(__dirname,  'connection-org2.json');
-// 	const fileExists = fs.existsSync(ccpPath);
-// 	if (!fileExists) {
-// 		throw new Error(`no such file or directory: ${ccpPath}`);
-// 	}
-// 	const contents = fs.readFileSync(ccpPath, 'utf8');
+exports.buildTransportCCP = () => {
+	// load the common connection configuration file
+	const ccpPath = path.resolve(__dirname,  'connection-transport.json');
+	const fileExists = fs.existsSync(ccpPath);
+	if (!fileExists) {
+		throw new Error(`no such file or directory: ${ccpPath}`);
+	}
+	const contents = fs.readFileSync(ccpPath, 'utf8');
 
-// 	// build a JSON object from the file contents
-// 	const ccp = JSON.parse(contents);
+	// build a JSON object from the file contents
+	const ccp = JSON.parse(contents);
 
-// 	console.log(`Loaded the network configuration located at ${ccpPath}`);
-// 	return ccp;
-// };
+	console.log(`Loaded the network configuration located at ${ccpPath}`);
+	return ccp;
+};
 
-// exports.buildCCPOrg3 = () => {
-// 	// load the common connection configuration file
-// 	const ccpPath = path.resolve(__dirname,  'connection-org3.json');
-// 	const fileExists = fs.existsSync(ccpPath);
-// 	if (!fileExists) {
-// 		throw new Error(`no such file or directory: ${ccpPath}`);
-// 	}
-// 	const contents = fs.readFileSync(ccpPath, 'utf8');
+exports.buildAgencyCCP = () => {
+	// load the common connection configuration file
+	const ccpPath = path.resolve(__dirname,  'connection-agency.json');
+	const fileExists = fs.existsSync(ccpPath);
+	if (!fileExists) {
+		throw new Error(`no such file or directory: ${ccpPath}`);
+	}
+	const contents = fs.readFileSync(ccpPath, 'utf8');
 
-// 	// build a JSON object from the file contents
-// 	const ccp = JSON.parse(contents);
+	// build a JSON object from the file contents
+	const ccp = JSON.parse(contents);
 
-// 	console.log(`Loaded the network configuration located at ${ccpPath}`);
-// 	return ccp;
-// };
+	console.log(`Loaded the network configuration located at ${ccpPath}`);
+	return ccp;
+};
+
+exports.buildProviderCCP = () => {
+	// load the common connection configuration file
+	const ccpPath = path.resolve(__dirname,  'connection-provider.json');
+	const fileExists = fs.existsSync(ccpPath);
+	if (!fileExists) {
+		throw new Error(`no such file or directory: ${ccpPath}`);
+	}
+	const contents = fs.readFileSync(ccpPath, 'utf8');
+
+	// build a JSON object from the file contents
+	const ccp = JSON.parse(contents);
+
+	console.log(`Loaded the network configuration located at ${ccpPath}`);
+	return ccp;
+};
+
+exports.buildProducerCCP = () => {
+	// load the common connection configuration file
+	const ccpPath = path.resolve(__dirname,  'connection-producer.json');
+	const fileExists = fs.existsSync(ccpPath);
+	if (!fileExists) {
+		throw new Error(`no such file or directory: ${ccpPath}`);
+	}
+	const contents = fs.readFileSync(ccpPath, 'utf8');
+
+	// build a JSON object from the file contents
+	const ccp = JSON.parse(contents);
+
+	console.log(`Loaded the network configuration located at ${ccpPath}`);
+	return ccp;
+};
+
+exports.buildFarmacyCCP = () => {
+	// load the common connection configuration file
+	const ccpPath = path.resolve(__dirname,  'connection-farmacy.json');
+	const fileExists = fs.existsSync(ccpPath);
+	if (!fileExists) {
+		throw new Error(`no such file or directory: ${ccpPath}`);
+	}
+	const contents = fs.readFileSync(ccpPath, 'utf8');
+
+	// build a JSON object from the file contents
+	const ccp = JSON.parse(contents);
+
+	console.log(`Loaded the network configuration located at ${ccpPath}`);
+	return ccp;
+};
+
 
 exports.buildWallet = async (Wallets, walletPath) => {
 	// Create a new  wallet : Note that wallet is for managing identities.
