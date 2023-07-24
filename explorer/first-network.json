@@ -8,7 +8,7 @@
 			"password": "exploreradminpw"
 		},
 		"enableAuthentication": false,
-		"organization": "Org1MSP",
+		"organization": "UaMSP",
 		"connection": {
 			"timeout": {
 				"peer": {
@@ -21,7 +21,7 @@
 	"channels": {
 		"mychannel": {
 			"peers": {
-				"peer0.org1.example.com": {}
+				"peer0.ua.bcfm.com": {}
 			},
 			"connection": {
 				"timeout": {
@@ -35,25 +35,25 @@
 		}
 	},
 	"organizations": {
-		"Org1MSP": {
-			"mspid": "Org1MSP",
+		"UaMSP": {
+			"mspid": "UaMSP",
 			"adminPrivateKey": {
-				"path": "/tmp/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/ORG1_MSPKEY"
+				"path": "/tmp/crypto/peerOrganizations/ua.bcfm.com/users/Admin@ua.bcfm.com/msp/keystore/885377496950c0f68f8590edb13e2b81b17b3712b8f780f1815512b8d4a3c3c3_sk"
 			},
 			"peers": [
-				"peer0.org1.example.com"
+				"peer0.ua.bcfm.com"
 			],
 			"signedCert": {
-				"path": "/tmp/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/signcerts/cert.pem"
+				"path": "/tmp/crypto/peerOrganizations/ua.bcfm.com/users/Admin@ua.bcfm.com/msp/signcerts/cert.pem"
 			}
 		}
 	},
 	"peers": {
-		"peer0.org1.example.com": {
+		"peer0.ua.bcfm.com": {
 			"tlsCACerts": {
-				"path": "/tmp/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt"
+				"path": "/tmp/crypto/peerOrganizations/ua.bcfm.com/peers/peer0.ua.bcfm.com/tls/ca.crt"
 			},
-			"url": "grpcs://peer0.org1.example.com:7051"
+			"url": "grpcs://peer0.ua.bcfm.com:7051"
 		}
 	}
 }

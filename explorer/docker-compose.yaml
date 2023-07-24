@@ -11,10 +11,10 @@ networks:
       name: test
 
 services:
-  explorerdbmynetworkcom:
+  explorerdbbcfmcom:
     image: hyperledger/explorer-db:latest
-    container_name: explorerdb.mynetwork.com
-    hostname: explorerdb.mynetwork.com
+    container_name: explorerdb.bcfm.com
+    hostname: explorerdb.bcfm.com
     environment:
       - DATABASE_DATABASE=fabricexplorer
       - DATABASE_USERNAME=hppoc
@@ -29,18 +29,18 @@ services:
     networks:
       test:
         aliases:
-          - explorerdb.mynetwork.com
+          - explorerdb.bcfm.com
 
-  explorermynetworkcom:
+  explorerbcfmcom:
     deploy:
       placement:
        constraints:
          - node.labels.name == manager
     image: hyperledger/explorer:latest
-    container_name: explorer.mynetwork.com
-    hostname: explorer.mynetwork.com
+    container_name: explorer.bcfm.com
+    hostname: explorer.bcfm.com
     environment:
-      - DATABASE_HOST=explorerdb.mynetwork.com
+      - DATABASE_HOST=explorerdb.bcfm.com
       - DATABASE_DATABASE=fabricexplorer
       - DATABASE_USERNAME=hppoc
       - DATABASE_PASSWD=password
@@ -57,8 +57,8 @@ services:
     ports:
       - 8080:8080
     depends_on:
-      - explorerdbmynetworkcom
+      - explorerdbbcfmcom
     networks:
       test:
         aliases:
-          - explorer.mynetwork.com
+          - explorer.bcfm.com
