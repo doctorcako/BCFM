@@ -1,6 +1,5 @@
-import Carousel from 'react-bootstrap/Carousel';
 
-function HomeDescription() {
+export default function HomeDescription() {
     return (
         <>
             <h2 className='font-bold text-left ml-0 mt-4'>What is BCFM useful for?</h2>
@@ -35,5 +34,3 @@ function HomeDescription() {
         
     );
 }
-
-export default HomeDescription;

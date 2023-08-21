@@ -17,12 +17,11 @@ export default function CustomNavbar() {
             className="d-inline-block align-top"
           />
           <Navbar.Brand href="/" className='mx-4'>BCFM</Navbar.Brand>
-          
           <Navbar.Toggle />
           <Navbar.Collapse className="justify-content-center">
             <Nav className="me-auto ml-3 mt-2">
+              <Nav.Link href="/">Home</Nav.Link>
               <Nav.Link href="/">Manage</Nav.Link>
-              <Nav.Link href="/">Project</Nav.Link>
               <Nav.Link href="#features">Work with us</Nav.Link>
               <Nav.Link href="#pricing">About us</Nav.Link>
             </Nav>
