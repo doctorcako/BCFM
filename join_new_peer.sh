@@ -1,7 +1,7 @@
 
-if [ -z $1 ]; then
+if [[ -z $1 && -z $2 ]]; then
 
-echo "Fatal error: Ssh key path has to be indicated: ./join_new_peer.sh /path/to/your/key.pem"
+echo "Fatal error: Ssh key path has to be indicated: ./join_new_peer.sh /path/to/your/key.pem 'peerName: (Transport, Agency, Farmacy, Producer, Provider)'"
 
 else
 
@@ -33,9 +33,6 @@ get -r /home/ubuntu/BCFM/test-network/organizations/ordererOrganizations
 exit
 EOF
 
+ssh -i $1 ubuntu@54.77.129.237 'cd /home/ubuntu/BCFM && [ -d /home/ubuntu/BCFM/logs ] && cd logs || mkdir logs  && [ -f /home/ubuntu/BCFM/logs/peer_updates.txt ] && echo 'Logs of $(date +%m-%d-%Y): $2 peer added. Update needed' >> peer_updates.txt || echo 'Logs of $(date +%m-%d-%Y): $2 peer added. Update needed' > peer_updates.txt && exit'
+
 fi
-
-
-
-
-
