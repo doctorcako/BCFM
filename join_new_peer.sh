@@ -16,7 +16,7 @@ if [ -d "$directory" ]
 then
     echo "Already exists $directory"
     cd $directory/BCFM
-    git commit -am "Commiting"
+    git reset --hard
     git pull
 else
     echo "Do not exists $directory, creating..."
