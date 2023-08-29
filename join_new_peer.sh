@@ -16,6 +16,7 @@ if [ -d "$directory" ]
 then
     echo "Already exists $directory"
     cd $directory/BCFM
+    git commit -am "Commiting"
     git pull
 else
     echo "Do not exists $directory, creating..."
@@ -32,6 +33,7 @@ get -r /home/ubuntu/BCFM/test-network/organizations/peerOrganizations
 get -r /home/ubuntu/BCFM/test-network/organizations/ordererOrganizations
 exit
 EOF
+
 
 ssh -i $1 ubuntu@54.77.129.237 'cd /home/ubuntu/BCFM && [ -d /home/ubuntu/BCFM/logs ] && cd logs || mkdir logs  && [ -f /home/ubuntu/BCFM/logs/peer_updates.txt ] && echo 'Logs of $(date +%m-%d-%Y): $2 peer added. Update needed' >> peer_updates.txt || echo 'Logs of $(date +%m-%d-%Y): $2 peer added. Update needed' > peer_updates.txt && exit'
 
