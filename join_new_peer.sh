@@ -16,7 +16,7 @@ if [ -d "$directory" ]
 then
     echo "Already exists $directory"
     cd $directory/BCFM
-    git fetch && git pull
+    git pull
 else
     echo "Do not exists $directory, creating..."
     mkdir $directory && cd $directory
