@@ -1,7 +1,5 @@
-Logs of $(date +%m-%d-%Y): $2 peer added. Update needed
-Logs of $(date +%m-%d-%Y): $2 peer added. Update needed
-Logs of $(date +%m-%d-%Y): $2 peer added. Update needed
-Logs of $(date +%m-%d-%Y): $2 peer added. Update needed
-Logs of $(date +%m-%d-%Y): $2 peer added. Update needed
 Logs of 08-29-2023: Transport peer added. Update needed
 Logs of 08-29-2023: Provider peer added. Update needed
+Logs of 09-07-2023: Agency peer added. Update needed
+Logs of 09-07-2023: Producer peer added. Update needed
+Logs of 09-07-2023: Producer peer added. Update needed
