@@ -1,4 +1,4 @@
-nodesString="$(docker node ls -q)"
+nodesString="$(docker node ls -q)";
 nodesArray=($nodesString)
 
 ## if [ ${#nodesArray[@]} gt 6 ] then
@@ -10,24 +10,23 @@ function peerJoinChannel(){
     else
         echo "Updating services";
 
-        ##OBLIGATORIO USAR UPDATE SERVICE
-        services="$(docker service ls -f Name=bcfm -q)"
-        servicesArray=($services)
+        # services="$(docker service ls -f Name=Orgs -q)"
+        # servicesArray=($services)
+        # for service in ${servicesArray[@]}
+        # do
+        #     docker service update ${service}
+        # done
 
-        for service in ${servicesArray[@]}
-        do
-            docker service update ${service}
-        done
+        # services="$(docker service ls -f Name=bcfmCli -q)"
+        # servicesArray=($services)
+        # for service in ${servicesArray[@]}
+        # do
+        #     docker service update ${service}
+        # done
         
-        # export SERVICE_RAW=($(cat test-network/docker/docker-compose-test-net.yaml | grep producerbcfm)[])
-        # export SERVICE=$(echo $SERVICE_RAW | tr -d "${SERVICE_RAW:11:-1}")
-
-        # docker service update $SERVICE
-        # docker stack deploy -c test-network/docker/docker-compose-test-net.yaml -c test-network/docker/docker-compose-couch.yaml bcfmOrgs
-        # docker stack deploy -c test-network/docker/docker-compose-cli.yaml bcfmCli
         echo "Waiting for services to raise..." 
-        sleep 2
-        docker exec -it $(docker ps -aqf "name=$1") peer channel join -b ./channel-artifacts/mychannel.block && ./scripts/updateAnchorPeer.sh mychannel ${$1}MSP orderer.bcfm.com
+        sleep 3
+        # docker exec -it $(docker ps -aqf name="$1") peer channel join -b ./channel-artifacts/mychannel.block && ./scripts/updateAnchorPeer.sh mychannel ${$1}MSP orderer.bcfm.com
     fi
     
 }
@@ -54,8 +53,8 @@ function addNodeCommands(){
             matches=false
         fi
         peerJoinChannel $7 ${matches}
-    else
-        echo "Node not active"
+    elif [ $(docker node ls --format '{{.Status}}' -f id=$1) = "Down" ]; then
+        docker node rm $1
     fi
 }
 
@@ -77,8 +76,14 @@ function main(){
             if [ ${node} = "$(docker node ls -f node.label=name=manager -q)" ]; then
                 echo "Active manager - UA"
             elif [ ${node} = "$(docker node ls -f node.label=name=producer -q)" ]; then
-                echo "Active producer"
-                isproducer=true
+                if [ $(docker node ls --format '{{.Status}}' -f id=$node) = "Down" ]; then
+                    echo "Producer exists but is not available, placing on other node..."
+                    docker node rm $node
+                else
+                    echo "Active producer"
+                    isproducer=true
+                fi
+                
             elif [ ${node} = "$(docker node ls -f node.label=name=provider -q)" ]; then
                 echo "Active provider"
                 isprovider=true
@@ -97,11 +102,6 @@ function main(){
             fi
         done
     fi
-
-
-    
-
-
 
 }
 

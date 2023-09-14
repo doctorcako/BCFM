@@ -12,6 +12,10 @@ networks:
 
 services:
   explorerdbbcfmcom:
+    deploy:
+      placement:
+       constraints:
+         - node.labels.name == manager
     image: hyperledger/explorer-db:latest
     container_name: explorerdb.bcfm.com
     hostname: explorerdb.bcfm.com

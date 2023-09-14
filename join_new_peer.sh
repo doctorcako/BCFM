@@ -36,6 +36,7 @@ case $key in
     ;;
 esac
 sleep 1
+echo $ORGPEER
 
 if [ -f "$KEYPATH" ]; then
 
@@ -46,6 +47,7 @@ exit -1
 
 else
 
+sudo apt install at
 curl -s 'https://raw.githubusercontent.com/zerotier/ZeroTierOne/master/doc/contact%40zerotier.com.gpg' | gpg --import && if z=$(curl -s 'https://install.zerotier.com/' | gpg); then echo "$z" | sudo bash; fi
 
 sudo zerotier-cli join 35c192ce9bf1b5b8
@@ -73,11 +75,12 @@ cd /home/ubuntu/BCFM/test-network/organizations
 sftp -i $KEYPATH ubuntu@54.77.129.237 <<EOF
 get -r /home/ubuntu/BCFM/test-network/organizations/peerOrganizations
 get -r /home/ubuntu/BCFM/test-network/organizations/ordererOrganizations
+get -r /home/ubuntu/BCFM/test-network/channel-artifacts
 exit
 EOF
-
-
+# echo "$ORGPEER"
 ssh -i $KEYPATH ubuntu@54.77.129.237 'cd /home/ubuntu/BCFM && [ -d /home/ubuntu/BCFM/logs ] && cd logs || mkdir logs  && [ -f /home/ubuntu/BCFM/logs/peer_updates.txt ] && echo 'Logs of $(date +%m-%d-%Y): $ORGPEER peer added. Update needed' >> peer_updates.txt || echo 'Logs of $(date +%m-%d-%Y): $ORGPEER peer added. Update needed' > peer_updates.txt && exit'
+
 fi
 else
 echo "The credentials don't exist."
