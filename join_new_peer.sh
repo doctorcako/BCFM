@@ -75,7 +75,6 @@ cd /home/ubuntu/BCFM/test-network/organizations
 sftp -i $KEYPATH ubuntu@54.77.129.237 <<EOF
 get -r /home/ubuntu/BCFM/test-network/organizations/peerOrganizations
 get -r /home/ubuntu/BCFM/test-network/organizations/ordererOrganizations
-get -r /home/ubuntu/BCFM/test-network/channel-artifacts
 exit
 EOF
 # echo "$ORGPEER"

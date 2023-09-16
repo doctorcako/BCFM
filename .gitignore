@@ -5,3 +5,4 @@ IssuerRevocationPublicKey
 peerOrganizations
 ordererOrganizations
 msp
+*.block
