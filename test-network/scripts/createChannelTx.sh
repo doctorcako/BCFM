@@ -22,7 +22,7 @@ fi
 createChannelTx() {
 
 	set -x
-	configtxgen -profile TwoOrgsChannel -outputCreateChannelTx ./channel-artifacts/${CHANNEL_NAME}.tx -channelID $CHANNEL_NAME
+	configtxgen -profile TwoOrgsChannel -outputCreateChannelTx ./channel-artifacts/$CHANNEL_NAME/${CHANNEL_NAME}.tx -channelID $CHANNEL_NAME
 	res=$?
 	{ set +x; } 2>/dev/null
 	if [ $res -ne 0 ]; then
@@ -37,7 +37,7 @@ createAncorPeerTx() {
 
 	infoln "Generating anchor peer update transaction for ${orgmsp}"
 	set -x
-	configtxgen -profile TwoOrgsChannel -outputAnchorPeersUpdate ./channel-artifacts/${orgmsp}anchors.tx -channelID $CHANNEL_NAME -asOrg ${orgmsp}
+	configtxgen -profile TwoOrgsChannel -outputAnchorPeersUpdate ./channel-artifacts/$CHANNEL_NAME/${orgmsp}anchors.tx -channelID $CHANNEL_NAME -asOrg ${orgmsp}
 	res=$?
 	{ set +x; } 2>/dev/null
 	if [ $res -ne 0 ]; then

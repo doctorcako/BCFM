@@ -1,1 +1,1 @@
-peer channel join -b ./channel-artifacts/${CHANNEL_NAME}.block
+peer channel join -b ./channel-artifacts/$CHANNEL_NAME/${CHANNEL_NAME}.block

@@ -270,7 +270,7 @@ services:
     deploy:
       placement:
         constraints:
-          - node.labels.name == manager
+          - node.labels.name == agency
     container_name: peer0.agency.bcfm.com
     image: hyperledger/fabric-peer:2.3
     environment:
@@ -318,7 +318,7 @@ services:
     deploy:
       placement:
         constraints:
-          - node.labels.name == manager
+          - node.labels.name == transport
     container_name: peer0.transport.bcfm.com
     image: hyperledger/fabric-peer:2.3
     environment:
@@ -396,6 +396,7 @@ services:
       - CORE_PEER_GOSSIP_USELEADERELECTION=true
       - CORE_PEER_GOSSIP_ORGLEADER=false
       - CORE_PEER_TLS_CLIENTAUTHREQUIRED=false
+      - ORDERER_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/organizations/ordererOrganizations/bcfm.com/orderers/orderer.bcfm.com/msp/tlscacerts/tlsca.bcfm.com-cert.pem
     volumes:
       - /var/run/:/host/var/run/
       - /home/ubuntu/BCFM/test-network/organizations/peerOrganizations/producer.bcfm.com/peers/peer0.producer.bcfm.com/msp:/etc/hyperledger/fabric/msp
@@ -414,7 +415,7 @@ services:
     deploy:
       placement:
         constraints:
-          - node.labels.name == manager
+          - node.labels.name == provider
     container_name: peer0.provider.bcfm.com
     image: hyperledger/fabric-peer:2.3
     environment:
@@ -462,7 +463,7 @@ services:
     deploy:
       placement:
         constraints:
-          - node.labels.name == manager
+          - node.labels.name == farmacy
     container_name: peer0.farmacy.bcfm.com
     image: hyperledger/fabric-peer:2.3
     environment:
@@ -505,3 +506,5 @@ services:
       test:
         aliases:
           - peer0.farmacy.bcfm.com
+
+  

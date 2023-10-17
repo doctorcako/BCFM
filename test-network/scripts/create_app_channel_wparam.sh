@@ -1,0 +1,1 @@
+peer channel create -o orderer.bcfm.com:7050 -c $1 -f ./channel-artifacts/$1/$1.tx --outputBlock ./channel-artifacts/$1/$1.block --tls --cafile $ORDERER_CA

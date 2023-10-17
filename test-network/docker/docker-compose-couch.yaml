@@ -11,12 +11,12 @@ networks:
       name: test
 
 services:
-  couchdb0:
+  couchdb0ua:
     deploy:
       placement:
         constraints:
           - node.labels.name == manager
-    container_name: couchdb0
+    container_name: couchdb0ua
     image: couchdb:3.1.1
     # Populate the COUCHDB_USER and COUCHDB_PASSWORD to set an admin user and password
     # for CouchDB.  This will prevent CouchDB from operating in an "Admin Party" mode.
@@ -30,7 +30,7 @@ services:
     networks:
       test:
         aliases:
-          - couchdb0.bcfm.com
+          - couchdb0ua.bcfm.com
 
   peer0uabcfmcom:
     deploy:
@@ -39,21 +39,21 @@ services:
           - node.labels.name == manager
     environment:
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb0.bcfm.com:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb0ua.bcfm.com:5984
       # The CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME and CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD
       # provide the credentials for ledger to connect to CouchDB.  The username and password must
       # match the username and password set for the associated CouchDB.
       - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
       - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=adminpw
     depends_on:
-      - couchdb0
+      - couchdb0ua
 
-  couchdb1:
+  couchdb0agency:
     deploy:
       placement:
         constraints:
-          - node.labels.name == manager
-    container_name: couchdb1
+          - node.labels.name == agency
+    container_name: couchdb0agency
     image: couchdb:3.1.1
     # Populate the COUCHDB_USER and COUCHDB_PASSWORD to set an admin user and password
     # for CouchDB.  This will prevent CouchDB from operating in an "Admin Party" mode.
@@ -67,30 +67,30 @@ services:
     networks:
       test:
         aliases:
-          - couchdb1.bcfm.com
+          - couchdb0agency.bcfm.com
 
   peer0agencybcfmcom:
     deploy:
       placement:
         constraints:
-          - node.labels.name == manager
+          - node.labels.name == agency
     environment:
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb1.bcfm.com:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb0agency.bcfm.com:5984
       # The CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME and CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD
       # provide the credentials for ledger to connect to CouchDB.  The username and password must
       # match the username and password set for the associated CouchDB.
       - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
       - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=adminpw
     depends_on:
-      - couchdb1
+      - couchdb0agency
 
-  couchdb2:
+  couchdb0transport:
     deploy:
       placement:
         constraints:
-          - node.labels.name == manager
-    container_name: couchdb2
+          - node.labels.name == transport
+    container_name: couchdb0transport
     image: couchdb:3.1.1
     # Populate the COUCHDB_USER and COUCHDB_PASSWORD to set an admin user and password
     # for CouchDB.  This will prevent CouchDB from operating in an "Admin Party" mode.
@@ -104,30 +104,30 @@ services:
     networks:
       test:
         aliases:
-          - couchdb2.bcfm.com
+          - couchdb0transport.bcfm.com
 
   peer0transportbcfmcom:
     deploy:
       placement:
         constraints:
-          - node.labels.name == manager
+          - node.labels.name == transport
     environment:
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb2.bcfm.com:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb0transport.bcfm.com:5984
       # The CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME and CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD
       # provide the credentials for ledger to connect to CouchDB.  The username and password must
       # match the username and password set for the associated CouchDB.
       - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
       - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=adminpw
     depends_on:
-      - couchdb2
+      - couchdb0transport
 
-  couchdb3:
+  couchdb0producer:
     deploy:
       placement:
         constraints:
           - node.labels.name == producer
-    container_name: couchdb3
+    container_name: couchdb0producer
     image: couchdb:3.1.1
     # Populate the COUCHDB_USER and COUCHDB_PASSWORD to set an admin user and password
     # for CouchDB.  This will prevent CouchDB from operating in an "Admin Party" mode.
@@ -141,7 +141,7 @@ services:
     networks:
       test:
         aliases:
-          - couchdb3.bcfm.com
+          - couchdb0producer.bcfm.com
 
   peer0producerbcfmcom:
     deploy:
@@ -150,21 +150,21 @@ services:
           - node.labels.name == producer
     environment:
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb3.bcfm.com:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb0producer.bcfm.com:5984
       # The CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME and CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD
       # provide the credentials for ledger to connect to CouchDB.  The username and password must
       # match the username and password set for the associated CouchDB.
       - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
       - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=adminpw
     depends_on:
-      - couchdb3
+      - couchdb0producer
 
-  couchdb4:
+  couchdb0provider:
     deploy:
       placement:
         constraints:
-          - node.labels.name == manager
-    container_name: couchdb4
+          - node.labels.name == provider
+    container_name: couchdb0provider
     image: couchdb:3.1.1
     # Populate the COUCHDB_USER and COUCHDB_PASSWORD to set an admin user and password
     # for CouchDB.  This will prevent CouchDB from operating in an "Admin Party" mode.
@@ -178,30 +178,30 @@ services:
     networks:
       test:
         aliases:
-          - couchdb4.bcfm.com
+          - couchdb0provider.bcfm.com
 
   peer0providerbcfmcom:
     deploy:
       placement:
         constraints:
-          - node.labels.name == manager
+          - node.labels.name == provider
     environment:
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb4.bcfm.com:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb0provider.bcfm.com:5984
       # The CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME and CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD
       # provide the credentials for ledger to connect to CouchDB.  The username and password must
       # match the username and password set for the associated CouchDB.
       - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
       - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=adminpw
     depends_on:
-      - couchdb4
+      - couchdb0provider
 
-  couchdb5:
+  couchdb0farmacy:
     deploy:
       placement:
         constraints:
-          - node.labels.name == manager
-    container_name: couchdb5
+          - node.labels.name == farmacy
+    container_name: couchdb0farmacy
     image: couchdb:3.1.1
     # Populate the COUCHDB_USER and COUCHDB_PASSWORD to set an admin user and password
     # for CouchDB.  This will prevent CouchDB from operating in an "Admin Party" mode.
@@ -215,20 +215,20 @@ services:
     networks:
       test:
         aliases:
-          - couchdb5.bcfm.com
+          - couchdb0farmacy.bcfm.com
 
   peer0farmacybcfmcom:
     deploy:
       placement:
         constraints:
-          - node.labels.name == manager
+          - node.labels.name == farmacy
     environment:
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb5.bcfm.com:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb0farmacy.bcfm.com:5984
       # The CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME and CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD
       # provide the credentials for ledger to connect to CouchDB.  The username and password must
       # match the username and password set for the associated CouchDB.
       - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
       - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=adminpw
     depends_on:
-      - couchdb5
+      - couchdb0farmacy
