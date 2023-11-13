@@ -270,7 +270,7 @@ services:
     deploy:
       placement:
         constraints:
-          - node.labels.name == agency
+          - node.labels.name == manager
     container_name: peer0.agency.bcfm.com
     image: hyperledger/fabric-peer:2.3
     environment:
@@ -318,7 +318,7 @@ services:
     deploy:
       placement:
         constraints:
-          - node.labels.name == transport
+          - node.labels.name == manager
     container_name: peer0.transport.bcfm.com
     image: hyperledger/fabric-peer:2.3
     environment:

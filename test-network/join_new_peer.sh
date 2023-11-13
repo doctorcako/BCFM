@@ -75,17 +75,32 @@ fi
 
 chmod -R 700 /home/ubuntu/BCFM
 cd /home/ubuntu/BCFM/test-network/organizations
-ssh -i $KEYPATH ubuntu@54.77.129.237 "cd /home/ubuntu/BCFM && ./test-network/update_net_peers.sh $ORGPEER $(date +%H:%M_%d%m%Y) ; [ -d /home/ubuntu/BCFM/logs ] && cd logs || mkdir logs  && [ -f /home/ubuntu/BCFM/logs/peer_updates.txt ] && echo 'Logs of $(date +%m-%d-%Y): $ORGPEER peer added. Update needed' >> peer_updates.txt || echo 'Logs of $(date +%m-%d-%Y): $ORGPEER peer added. Update needed' > peer_updates.txt && exit"
+
+export CHANNEL_NAME="channel$(date +%d%m%Y%H%M)"
+
+ssh -i $KEYPATH ubuntu@54.77.129.237 "cd /home/ubuntu/BCFM/test-network && ./update_net_peers.sh $ORGPEER $CHANNEL_NAME  ; cd /home/ubuntu/BCFM/logs && [ -d /home/ubuntu/BCFM/logs ] && cd logs || mkdir logs  && [ -f /home/ubuntu/BCFM/logs/peer_updates.txt ] && echo 'Logs of $(date +%m-%d-%Y): $ORGPEER peer added. Update needed' >> peer_updates.txt || echo 'Logs of $(date +%m-%d-%Y): $ORGPEER peer added. Update needed' > peer_updates.txt && exit"
 #&& ./update_net_peers.sh '$ORGPEER' '$(date +%H:%M_%d%m%Y)'
 sftp -i $KEYPATH ubuntu@54.77.129.237 <<EOF
 get -r /home/ubuntu/BCFM/test-network/organizations/peerOrganizations
 get -r /home/ubuntu/BCFM/test-network/organizations/ordererOrganizations
+exit
+EOF
+
+cd /home/ubuntu/BCFM/test-network/ ; mkdir channel-artifacts
+
+sftp -i $KEYPATH ubuntu@54.77.129.237 <<EOF
 get -r /home/ubuntu/BCFM/test-network/channel-artifacts
 exit
 EOF
 # echo "$ORGPEER"
 
-ssh -i $KEYPATH ubuntu@54.77.129.237 "cd /home/ubuntu/BCFM && ./test-network/deploy_clients_on_new_peers.sh $NODE $ORGPEER $NODE channel-$(date +%H:%M_%d%m%Y)"
+ssh -i $KEYPATH ubuntu@54.77.129.237 "cd /home/ubuntu/BCFM/test-network && ./deploy_clients_on_new_peers.sh $NODE $ORGPEER $NODE $CHANNEL_NAME"
+sleep 20
+
+cliContainer=$(docker ps -q -f name=bcfm_Cli_cli)
+cd /home/ubuntu/BCFM/test-network/
+./set_chaincodes $cliContainer ##make commit and push to test
+
 fi
 else
 echo "The credentials don't exist."

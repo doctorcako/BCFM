@@ -36,8 +36,8 @@ services:
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: 
       - "/bin/bash"
-      - -c 
-      - sleep 5 && peer channel join -b ./channel-artifacts/${CHANNEL_NAME}/${CHANNEL_NAME}.block ; ./scripts/updateAnchorPeer.sh ${CHANNEL_NAME} ${ORG}MSP orderer.bcfm.com ; sleep infinity
+      - "-c" 
+      - "sleep 5 && peer channel join -b ./channel-artifacts/${CHANNEL_NAME}/${CHANNEL_NAME}.block ; ./scripts/updateAnchorPeer.sh ${CHANNEL_NAME} ${ORG}MSP orderer.bcfm.com ; sleep infinity"
     volumes:
       - /var/run/:/host/var/run/
       - ~/BCFM/chaincode/:/opt/gopath/src/github.com/chaincode

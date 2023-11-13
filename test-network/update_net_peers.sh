@@ -51,51 +51,87 @@ function peerJoinChannel(){
     # if [[ $2 = false || $1 = false ]]; then
     #     echo "Peer name is empty or doesn't match. Indicate the new peer you want to add: './update_net_peers.sh org (org format: Producer, Provider, Agency, Farmacy or Transport)'"
     # else
+        # docker node update --label-add name=$3 $1
         local NODELABEL=$3
         local ORG=$4
         local NODELABEL2=$NODELABEL
-        
-        # # if [ $NODELABEL = "manager" ]; then
-        # #     $NODELABEL2= 'ua'
-        # # fi
-
-        # local PEERPORT=$(docker service ls --format '{{.Ports}}' -f name=bcfm_Core_peer0${3}bcfmcom | sed 's/-.*//' |sed 's/[^0-9]:*//g')
-        # # local CHAINCODEPORT=$(expr $PEERPORT + 1)
-        # # local COUCHPORT=$(docker service ls --format '{{.Ports}}' -f name=bcfm_Core_couchdb0${3} | sed 's/-.*//' |sed 's/[^0-9]:*//g')
-        
-        # # echo "$(yaml_org $NODELABEL $ORG $NODELABEL2 $CHAINCODEPORT $PEERPORT $COUCHPORT 0)" > update-orgs-config.yaml
-        # # echo "$(yaml_couch $NODELABEL $ORG $NODELABEL2 $CHAINCODEPORT $PEERPORT $COUCHPORT 0)" > update-couch-config.yaml
-        # # docker stack deploy -c update-orgs-config.yaml -c update-couch-config.yaml bcfm_Core
-        # export CHANNEL_NAME="mychannel"
-
-
-        export CHANNEL_NAME=channel-$5
+        export CHANNEL_NAME=$5
+        export CHAINCODES_PACKAGED="Undone"
         
         ./scripts/createChannelTx.sh $CHANNEL_NAME
-        # cd ..
-        # ./scripts/createChannelTx.sh $CHANNEL_NAME
+        echo "Channel creation, syncing..."
+        sleep 15
         
-        NEW_CHANNEL_COMMAND="./scripts/create_app_channel_wparam.sh $CHANNEL_NAME ; peer channel join -b ./channel-artifacts/$CHANNEL_NAME/$CHANNEL_NAME.block && ./scripts/updateAnchorPeer.sh $CHANNEL_NAME UaMSP orderer.bcfm.com ; exit"
-        echo "$NEW_CHANNEL_COMMAND"
-        # # echo "$(yaml_cli manager Ua ua 7051 $CHANNEL_NAME $NEW_CHANNEL_COMMAND)" > update-create-cli-config.yaml
-        # # docker stack deploy -c update-create-cli-config.yaml bcfm_Cli
-        # sleep 5
-        # docker exec -it $(docker ps -q -f name=bcfm_Cli) bash -c "$NEW_CHANNEL_COMMAND"
-        
+        export NEW_COMMAND="./scripts/create_app_channel_wparam.sh $CHANNEL_NAME && peer channel join -b ./channel-artifacts/$CHANNEL_NAME/$CHANNEL_NAME.block && ./scripts/updateAnchorPeer.sh $CHANNEL_NAME UaMSP orderer.bcfm.com ; exit"
+        docker exec -e CHANNEL_NAME=$CHANNEL_NAME -i $(docker ps -q -f name=bcfm_Cli_cliUa) bash -c "$NEW_COMMAND"
+        echo "App channel created"
 
-        # COMMAND="sleep 25 && peer channel join -b ./channel-artifacts/$CHANNEL_NAME/$CHANNEL_NAME.block ; ./scripts/updateAnchorPeer.sh $CHANNEL_NAME ${ORG}MSP orderer.bcfm.com ; sleep infinity"
-        # echo "$(yaml_cli $NODELABEL $ORG $NODELABEL2 $PEERPORT $CHANNEL_NAME "$COMMAND")" > update-cli-config.yaml
-        # docker stack deploy -c update-cli-config.yaml bcfm_Cli
-        
-        
-        
+        containers=$(docker ps -q -f name=bcfm_Cli_cli)
+        contArray=($containers)
+
+        for container in ${contArray[@]}
+        do
+            echo "$container"
+            # if [ $container = $(docker ps -q -f name=bcfm_Cli_cliUa) ]; then
+            #     echo "Ua Node"
+            # else
+                
+            result=$(docker ps --filter id="${contArray[$i]}" --format "{{ .Names }}")
+            echo "$result"
+            if [[ "$result" == *"Agency"* ]]; then
+                export OrgMsp="AgencyMSP"
+            elif [[ "$result" == *"Transport"* ]]; then
+                export OrgMsp="TransportMSP"
+            elif [[ "$result" == *"Provider"* ]]; then
+                export OrgMsp="ProviderMSP"
+            elif [[ "$result" == *"Farmacy"* ]]; then
+                export OrgMsp="FarmacyMSP"
+            elif [[ "$result" == *"Producer"* ]]; then
+                export OrgMsp="ProducerMSP"
+            fi
+            command="peer channel join -b ./channel-artifacts/$CHANNEL_NAME/$CHANNEL_NAME.block && ./scripts/updateAnchorPeer.sh $CHANNEL_NAME $OrgMsp orderer.bcfm.com ; exit"
+            echo "$command"
+            docker exec -e CHANNEL_NAME=$CHANNEL_NAME -i $container bash -c "$command"
+            
+            if [ $CHAINCODES_PACKAGED = "Undone" ]; then
+                export CHAINCODES_PACKAGED="done"
+                ./set_chaincodes.sh $container --package
+            else
+                ./set_chaincodes.sh $container
+            fi
+        done
+
+
+        mspsToGetConnections="$(docker service ls --format "{{ .Name }}" --filter name=bcfm_Cli)";
+        mspsConnectionsArray=($mspsToGetConnections);
+
+        for enabledOrg in ${mspsConnectionsArray[@]}
+        do
+            if [[ "$enabledOrg" == *"Ua"* ]]; then
+                export UaMSP=1
+            elif [[ "$enabledOrg" == *"Agency"* ]]; then
+                export AgencyMSP=2
+            elif [[ "$enabledOrg" == *"Transport"* ]]; then
+                export TransportMSP=3
+            elif [[ "$enabledOrg" == *"Producer"* ]]; then
+                export ProducerMSP=4
+            elif [[ "$enabledOrg" == *"Provider"* ]]; then
+                export ProviderMSP=5
+            elif [[ "$enabledOrg" == *"Farmacy"* ]]; then
+                export FarmacyMSP=6
+            fi
+        done
+
         echo "Updating organization services Core (peer and couchdb) and client";
         echo "Syncing Core services to enable client..."
         sleep 3
+
+        commitCommand="./scripts/commit_cc.sh ${chaincodes[$i]} $UaMSP $AgencyMSP $TransportMSP $ProducerMSP $ProviderMSP $FarmacyMSP"
+        docker exec -e CHANNEL_NAME=$CHANNEL_NAME -i $(docker ps -q -f name=bcfm_Cli_cliUa) bash -c "$commitCommand"
+        
+        
        
         echo "Waiting for services to raise..." 
-        ##idea final
-        # cada vez que se añada un nodo, hacer un stack deploy de todo ?(menos el couch)
         sleep 3
     # fi
 }
@@ -113,15 +149,23 @@ function addNodeCommands(){
         elif [[ $3 = false && $7 = "Provider" ]]; then
             echo "Running commands to add a provider"
             docker node update --label-add name=provider $1
+            nodelabel="provider"
+            org="Provider"
         elif [[ $4 = false && $7 = "Agency" ]]; then
             echo "Running commands to add a agency"
             docker node update --label-add name=agency $1
+            nodelabel="agency"
+            org="Agency"
         elif [[ $5 = false && $7 = "Farmacy" ]]; then
             echo "Running commands to add a farmacy"
             docker node update --label-add name=farmacy $1
+            nodelabel="farmacy"
+            org="Producer"
         elif [[ $6 = false && $7 = "Transport" ]]; then
             echo "Running commands to add a transport"
             docker node update --label-add name=transport $1
+            nodelabel="producer"
+            org="Producer"
         else
             matches=false
         fi
