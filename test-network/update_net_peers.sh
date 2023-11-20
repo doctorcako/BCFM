@@ -76,18 +76,19 @@ function peerJoinChannel(){
             #     echo "Ua Node"
             # else
                 
-            result=$(docker ps --filter id="${contArray[$i]}" --format "{{ .Names }}")
+            result=$(docker ps --filter id=$conatiner --format "{{ .Names }}")
             echo "$result"
+            OrgMsp="UaMSP"
             if [[ "$result" == *"Agency"* ]]; then
-                export OrgMsp="AgencyMSP"
+                OrgMsp="AgencyMSP"
             elif [[ "$result" == *"Transport"* ]]; then
-                export OrgMsp="TransportMSP"
+                OrgMsp="TransportMSP"
             elif [[ "$result" == *"Provider"* ]]; then
-                export OrgMsp="ProviderMSP"
+                OrgMsp="ProviderMSP"
             elif [[ "$result" == *"Farmacy"* ]]; then
-                export OrgMsp="FarmacyMSP"
+                OrgMsp="FarmacyMSP"
             elif [[ "$result" == *"Producer"* ]]; then
-                export OrgMsp="ProducerMSP"
+                OrgMsp="ProducerMSP"
             fi
             command="peer channel join -b ./channel-artifacts/$CHANNEL_NAME/$CHANNEL_NAME.block && ./scripts/updateAnchorPeer.sh $CHANNEL_NAME $OrgMsp orderer.bcfm.com ; exit"
             echo "$command"
@@ -101,34 +102,9 @@ function peerJoinChannel(){
             fi
         done
 
-
-        mspsToGetConnections="$(docker service ls --format "{{ .Name }}" --filter name=bcfm_Cli)";
-        mspsConnectionsArray=($mspsToGetConnections);
-
-        for enabledOrg in ${mspsConnectionsArray[@]}
-        do
-            if [[ "$enabledOrg" == *"Ua"* ]]; then
-                export UaMSP=1
-            elif [[ "$enabledOrg" == *"Agency"* ]]; then
-                export AgencyMSP=2
-            elif [[ "$enabledOrg" == *"Transport"* ]]; then
-                export TransportMSP=3
-            elif [[ "$enabledOrg" == *"Producer"* ]]; then
-                export ProducerMSP=4
-            elif [[ "$enabledOrg" == *"Provider"* ]]; then
-                export ProviderMSP=5
-            elif [[ "$enabledOrg" == *"Farmacy"* ]]; then
-                export FarmacyMSP=6
-            fi
-        done
-
         echo "Updating organization services Core (peer and couchdb) and client";
         echo "Syncing Core services to enable client..."
         sleep 3
-
-        commitCommand="./scripts/commit_cc.sh ${chaincodes[$i]} $UaMSP $AgencyMSP $TransportMSP $ProducerMSP $ProviderMSP $FarmacyMSP"
-        docker exec -e CHANNEL_NAME=$CHANNEL_NAME -i $(docker ps -q -f name=bcfm_Cli_cliUa) bash -c "$commitCommand"
-        
         
        
         echo "Waiting for services to raise..." 

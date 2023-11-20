@@ -17,7 +17,7 @@ services:
           - node.labels.name == producer
     environment:
       - SYS_CHANNEL=system-channel
-      - CHANNEL_NAME=channel021120231158
+      - CHANNEL_NAME=channel191120232025
       - GOPATH=/opt/gopath
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
       - FABRIC_LOGGING_SPEC=DEBUG
@@ -37,7 +37,7 @@ services:
     command: 
       - "/bin/bash"
       - "-c" 
-      - "sleep 5 && peer channel join -b ./channel-artifacts/channel021120231158/channel021120231158.block ; ./scripts/updateAnchorPeer.sh channel021120231158 ProducerMSP orderer.bcfm.com ; sleep infinity"
+      - "sleep 5 && peer channel join -b ./channel-artifacts/channel191120232025/channel191120232025.block ; ./scripts/updateAnchorPeer.sh channel191120232025 ProducerMSP orderer.bcfm.com ; sleep infinity"
     volumes:
       - /var/run/:/host/var/run/
       - ~/BCFM/chaincode/:/opt/gopath/src/github.com/chaincode

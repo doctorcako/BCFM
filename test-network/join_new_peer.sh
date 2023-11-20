@@ -94,7 +94,7 @@ exit
 EOF
 # echo "$ORGPEER"
 
-ssh -i $KEYPATH ubuntu@54.77.129.237 "cd /home/ubuntu/BCFM/test-network && ./deploy_clients_on_new_peers.sh $NODE $ORGPEER $NODE $CHANNEL_NAME"
+ssh -i $KEYPATH ubuntu@54.77.129.237 "cd /home/ubuntu/BCFM/test-network && ./deploy_clients_on_new_peers.sh $NODE $ORGPEER $NODE $CHANNEL_NAME && exit"
 sleep 20
 
 cliContainer=$(docker ps -q -f name=bcfm_Cli_cli)
