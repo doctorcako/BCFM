@@ -1,5 +1,6 @@
-
+#!/bin/bash
 export KEYPATH="$(pwd)/dtic-01.pem"
+export RUNPATH=$(pwd)
 
 echo "Choose the organization of the peer"
 echo "1. Agency"
@@ -78,7 +79,7 @@ cd /home/ubuntu/BCFM/test-network/organizations
 
 export CHANNEL_NAME="channel$(date +%d%m%Y%H%M)"
 
-ssh -i $KEYPATH ubuntu@54.77.129.237 "cd /home/ubuntu/BCFM/test-network && ./update_net_peers.sh $ORGPEER $CHANNEL_NAME  ; cd /home/ubuntu/BCFM/logs && [ -d /home/ubuntu/BCFM/logs ] && cd logs || mkdir logs  && [ -f /home/ubuntu/BCFM/logs/peer_updates.txt ] && echo 'Logs of $(date +%m-%d-%Y): $ORGPEER peer added. Update needed' >> peer_updates.txt || echo 'Logs of $(date +%m-%d-%Y): $ORGPEER peer added. Update needed' > peer_updates.txt && exit"
+ssh -i $KEYPATH ubuntu@54.77.129.237 "cd /home/ubuntu/BCFM/test-network && ./update_net_peers.sh $ORGPEER $CHANNEL_NAME  ; cd /home/ubuntu/BCFM/logs && [ -d /home/ubuntu/BCFM/logs ] && cd logs || mkdir logs  && [ -f /home/ubuntu/BCFM/logs/peer_updates.txt ] && echo 'Logs of $(date +%m-%d-%Y): $ORGPEER peer added. Update needed' >> peer_updates.txt || echo 'Logs of $(date +%m-%d-%Y): $ORGPEER peer added. Update needed' > peer_updates.txt && exit" > $RUNPATH/join_peer.txt
 #&& ./update_net_peers.sh '$ORGPEER' '$(date +%H:%M_%d%m%Y)'
 sftp -i $KEYPATH ubuntu@54.77.129.237 <<EOF
 get -r /home/ubuntu/BCFM/test-network/organizations/peerOrganizations
@@ -90,16 +91,21 @@ cd /home/ubuntu/BCFM/test-network/ ; mkdir channel-artifacts
 
 sftp -i $KEYPATH ubuntu@54.77.129.237 <<EOF
 get -r /home/ubuntu/BCFM/test-network/channel-artifacts
+get -r /home/ubuntu/BCFM/chaincodes/
 exit
 EOF
 # echo "$ORGPEER"
 
-ssh -i $KEYPATH ubuntu@54.77.129.237 "cd /home/ubuntu/BCFM/test-network && ./deploy_clients_on_new_peers.sh $NODE $ORGPEER $NODE $CHANNEL_NAME && exit"
-sleep 20
+ssh -i $KEYPATH ubuntu@54.77.129.237 "cd /home/ubuntu/BCFM/test-network && ./deploy_clients_on_new_peers.sh $NODE $ORGPEER $NODE $CHANNEL_NAME && exit" > $RUNPATH/deploy_cli.txt
+sleep 10
 
 cliContainer=$(docker ps -q -f name=bcfm_Cli_cli)
 cd /home/ubuntu/BCFM/test-network/
-./set_chaincodes $cliContainer ##make commit and push to test
+sudo ./set_chaincodes.sh $cliContainer $CHANNEL_NAME ##make commit and push to test
+sleep 10
+
+ssh -i $KEYPATH ubuntu@54.77.129.237 "cd /home/ubuntu/BCFM/test-network && ./set_chaincodes.sh --commit $CHANNEL_NAME" > $RUNPATH/chaincode_setup.txt
+sleep 10
 
 fi
 else

@@ -48,67 +48,74 @@ function yaml_couch {
 
 
 function peerJoinChannel(){
-    # if [[ $2 = false || $1 = false ]]; then
-    #     echo "Peer name is empty or doesn't match. Indicate the new peer you want to add: './update_net_peers.sh org (org format: Producer, Provider, Agency, Farmacy or Transport)'"
-    # else
-        # docker node update --label-add name=$3 $1
-        local NODELABEL=$3
-        local ORG=$4
-        local NODELABEL2=$NODELABEL
-        export CHANNEL_NAME=$5
-        export CHAINCODES_PACKAGED="Undone"
-        
-        ./scripts/createChannelTx.sh $CHANNEL_NAME
-        echo "Channel creation, syncing..."
-        sleep 15
-        
-        export NEW_COMMAND="./scripts/create_app_channel_wparam.sh $CHANNEL_NAME && peer channel join -b ./channel-artifacts/$CHANNEL_NAME/$CHANNEL_NAME.block && ./scripts/updateAnchorPeer.sh $CHANNEL_NAME UaMSP orderer.bcfm.com ; exit"
-        docker exec -e CHANNEL_NAME=$CHANNEL_NAME -i $(docker ps -q -f name=bcfm_Cli_cliUa) bash -c "$NEW_COMMAND"
-        echo "App channel created"
+   
+    local NODELABEL=$3
+    local ORG=$4
+    local NODELABEL2=$NODELABEL
+    export CHANNEL_NAME=$5
+    export CHAINCODES_PACKAGED="Undone"
+    
+    ./scripts/createChannelTx.sh $CHANNEL_NAME
+    echo "Channel creation, syncing..."
+    sleep 15
+    
+    export NEW_COMMAND="./scripts/create_app_channel_wparam.sh $CHANNEL_NAME && peer channel join -b ./channel-artifacts/$CHANNEL_NAME/$CHANNEL_NAME.block && ./scripts/updateAnchorPeer.sh $CHANNEL_NAME UaMSP orderer.bcfm.com ; exit"
+    docker exec -e CHANNEL_NAME=$CHANNEL_NAME -i $(docker ps -q -f name=bcfm_Cli_cliUa) bash -c "$NEW_COMMAND"
+    echo "App channel created"
 
-        containers=$(docker ps -q -f name=bcfm_Cli_cli)
-        contArray=($containers)
+    containers=$(docker ps -q -f name=bcfm_Cli_cli)
+    contArray=($containers)
+    echo "containers"
+    echo $contArray
 
-        for container in ${contArray[@]}
-        do
-            echo "$container"
-            # if [ $container = $(docker ps -q -f name=bcfm_Cli_cliUa) ]; then
-            #     echo "Ua Node"
-            # else
-                
-            result=$(docker ps --filter id=$conatiner --format "{{ .Names }}")
-            echo "$result"
-            OrgMsp="UaMSP"
-            if [[ "$result" == *"Agency"* ]]; then
-                OrgMsp="AgencyMSP"
-            elif [[ "$result" == *"Transport"* ]]; then
-                OrgMsp="TransportMSP"
-            elif [[ "$result" == *"Provider"* ]]; then
-                OrgMsp="ProviderMSP"
-            elif [[ "$result" == *"Farmacy"* ]]; then
-                OrgMsp="FarmacyMSP"
-            elif [[ "$result" == *"Producer"* ]]; then
-                OrgMsp="ProducerMSP"
-            fi
+    for container in ${contArray[@]}
+    do
+        result=$(docker ps --filter id=$container --format "{{ .Names }}")
+        echo "result: $result"
+        local OrgMsp="UaMSP"
+        if [[ "$result" == *"Agency"* ]]; then
+            echo "Agency found"
+            OrgMsp="AgencyMSP"
+        elif [[ "$result" == *"Transport"* ]]; then
+            echo "Transport found"
+            OrgMsp="TransportMSP"
+        elif [[ "$result" == *"Provider"* ]]; then
+            echo "Provider found"
+            OrgMsp="ProviderMSP"
+        elif [[ "$result" == *"Farmacy"* ]]; then
+            echo "Farmacy found"
+            OrgMsp="FarmacyMSP"
+        elif [[ "$result" == *"Producer"* ]]; then
+            echo "Producer found"
+            OrgMsp="ProducerMSP"
+        fi
+
+
+        echo "Found active org: $OrgMsp"
+        if [[ "$OrgMSP" != "UaMSP" ]]; then 
+        #OrgMSP is not saving and ua is passing again bacuse nothing is in OrgMSP
             command="peer channel join -b ./channel-artifacts/$CHANNEL_NAME/$CHANNEL_NAME.block && ./scripts/updateAnchorPeer.sh $CHANNEL_NAME $OrgMsp orderer.bcfm.com ; exit"
-            echo "$command"
             docker exec -e CHANNEL_NAME=$CHANNEL_NAME -i $container bash -c "$command"
-            
-            if [ $CHAINCODES_PACKAGED = "Undone" ]; then
-                export CHAINCODES_PACKAGED="done"
-                ./set_chaincodes.sh $container --package
-            else
-                ./set_chaincodes.sh $container
-            fi
-        done
+            echo "Joined channel for $OrgMsp"
+        fi
+        sleep 5
+        if [ $CHAINCODES_PACKAGED = "Undone" ]; then
+            export CHAINCODES_PACKAGED="done"
+            ./set_chaincodes.sh $container $CHANNEL_NAME --package
+        else
+            ./set_chaincodes.sh $container $CHANNEL_NAME
+        fi
 
-        echo "Updating organization services Core (peer and couchdb) and client";
-        echo "Syncing Core services to enable client..."
-        sleep 3
-        
-       
-        echo "Waiting for services to raise..." 
-        sleep 3
+        sleep 5
+    done
+
+    echo "Updating organization services Core (peer and couchdb) and client";
+    echo "Syncing Core services to enable client..."
+    sleep 3
+    
+    
+    echo "Waiting for services to raise..." 
+    sleep 3
     # fi
 }
 

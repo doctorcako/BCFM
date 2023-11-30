@@ -1,3 +1,4 @@
+#!/bin/bash
 nodesString="$(ls /home/ubuntu/BCFM/chaincode/ -I "*.tar.gz")";
 chaincodes=($nodesString)
 chaincodesLenght=0
@@ -28,27 +29,32 @@ do
             fi
         done
         
-        commitCommand="./scripts/commit_cc.sh $CHAINCODE_NAME $UaMSP $AgencyMSP $TransportMSP $ProducerMSP $ProviderMSP $FarmacyMSP"
+        commitCommand="./scripts/commit_cc.sh $CHAINCODE_NAME 1 $UaMSP $AgencyMSP $TransportMSP $ProducerMSP $ProviderMSP $FarmacyMSP"
         echo "commit: $commitCommand"
-        docker exec -e CHANNEL_NAME=$CHANNEL_NAME -i $(docker ps -q -f name=bcfm_Cli_cliUa) bash -c "$commitCommand"
+        docker exec -e CHANNEL_NAME=$2 -i $(docker ps -q -f name=bcfm_Cli_cliUa) bash -c "$commitCommand"
 
     else
         chaincodesLenght=$(( $chaincodesLenght+1 ))
         echo "Setting up ${chaincodes[$i]} chaincode..."
 
-        if [[ $2 = '--package' ]]; then
+        if [[ $3 = '--package' ]]; then
             echo "Packaging $CHAINCODE_NAME"
-            docker exec -e CC_NAME=$CHAINCODE_NAME -i $1 bash -c "./scripts/package_cc.sh"
+            commandPack="./scripts/package_cc.sh $CHAINCODE_NAME"
+            echo "$commandPack"
+            docker exec -i $1 bash -c "$commandPack"
         fi
+
+
 
         command1="./scripts/install_cc.sh $CHAINCODE_NAME ; sleep 10 ; exit"
         echo "command install and approve: $command1"
         
 
         #JUST TESTING
-        docker exec -i $1 bash -c "$command1"
+        docker exec -e CC_NAME=$CHAINCODE_NAME -i $1 bash -c "$command1"
 
-        command2="./scripts/approve_cc.sh $CHAINCODE_NAME 1"
+        command2="./scripts/approve_cc.sh $CHAINCODE_NAME $2 1"
+        echo "$command"
         docker exec -i $1 bash -c "$command2"
 
         sleep 10

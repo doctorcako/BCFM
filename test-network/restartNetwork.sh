@@ -1,7 +1,7 @@
 docker stack rm bcfm_Core
 sleep 2
 docker stack rm bcfm_Cli
-sleep 5
+sleep 15
 
 docker volume rm $(docker volume ls -q)
 
